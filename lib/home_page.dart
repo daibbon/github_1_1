@@ -24,6 +24,23 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+
+        Card(
+          child: ListTile(
+            leading: Icon(Icons.people),
+            title: Text("胸"),
+            trailing: Icon(Icons.more_vert),
+            onTap: (){
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ChestPage();
+                  },
+                ),
+              );
+            },
+          ),
+        ),
       ],
     ),
     Column(
@@ -68,4 +85,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

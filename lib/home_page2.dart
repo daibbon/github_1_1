@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:github_1/sign_in.dart';
+import 'package:github_1/migileft_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
+class Migileft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,9 +11,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
       ),
       // アプリ起動時にログイン画面を表示
-      home: SignInScreen(),
+      home: MigileftScreen(),
     );
   }
 }
-
-

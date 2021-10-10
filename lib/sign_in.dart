@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github_1/home_page.dart';
+import 'package:github_1/home_page2.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -72,7 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
     // 画像一覧画面に切り替え
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => HomePage(),
+        builder: (_) => Migileft(),
       ),
     );
   }
