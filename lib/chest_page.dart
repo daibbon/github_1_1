@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github_1/bench_press.dart';
 import 'package:github_1/chest_addpage.dart';
 
 
@@ -31,21 +32,26 @@ class _ChestPageState extends State<ChestPage> {
           return Card(
             child: ListTile(
               title: Text(chestList[index]),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>BenchPressPage()));
+              },
             ),
           );
         },
       ),
         floatingActionButton:
-        FloatingActionButton(
+        FloatingActionButton.extended(
+          icon: Icon(Icons.add),
+          label: Text('メニューを追加'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
           elevation: 0.5,
           onPressed: () async {
             // "push"で新規画面に遷移
-            // リスト追加画面から渡される値を受け取る
+            // メニュー追加画面から渡される値を受け取る
             final newListText = await Navigator.of(context).push(
               MaterialPageRoute(builder: (context) {
-                // 遷移先の画面としてリスト追加画面を指定
+                // 遷移先の画面としてメニュー追加画面を指定
                 return ChestAddPage();
               }),
             );
@@ -57,8 +63,8 @@ class _ChestPageState extends State<ChestPage> {
               });
             }
           },
-          child: Icon(
-            Icons.add, size: 36),
+          // child: Icon(
+          //   Icons.add, size: 36),
         ),
     );
   }
