@@ -1,24 +1,53 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ChestAddPage extends StatefulWidget {
+class WorkoutSet extends StatefulWidget {
   @override
-  _ChestAddPageState createState() => _ChestAddPageState();
+  _WorkoutSetState createState() => _WorkoutSetState();
 }
 
-class _ChestAddPageState extends State<ChestAddPage> {
+class _WorkoutSetState extends State<WorkoutSet> {
   // 入力されたテキストをデータとして持つ
   String _text = '';
+
   // データを元に表示するWidget
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('メニュー追加'),
-        elevation: 0.5,
-        centerTitle: true,
-        backgroundColor: CupertinoColors.white,
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Row(
+        children: [
+          Text('1',
+              style: TextStyle(fontSize: 18)),
+          SizedBox(
+            width:150,
+            height: 150,
+          ),
+          Flexible(child: TextField(
+            decoration: InputDecoration(labelText: '0'),
+            onChanged: (String value) {
+              // データが変更したことを知らせる（画面を更新する）
+              setState(() {
+                // データを変更
+                _text = value;
+              });
+            },
+          )),
+          Text('kg',
+              style: TextStyle(fontSize: 18)),
+          SizedBox(
+            width:20,
+          ),
+          Flexible(child: TextField(
+            decoration: InputDecoration(labelText: '0'),
+          )),
+          Text('回',
+              style: TextStyle(fontSize: 18)),
+        ],
       ),
+    );
+
+      Scaffold(
       body: Container(
         // 余白を付ける
         padding: EdgeInsets.all(64),
@@ -26,7 +55,7 @@ class _ChestAddPageState extends State<ChestAddPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // 入力されたテキストを表示
-            // Text(_text, style: TextStyle(color: Colors.blue)),
+            Text(_text, style: TextStyle(color: Colors.blue)),
             const SizedBox(height: 8),
             // テキスト入力
             TextField(
@@ -50,20 +79,6 @@ class _ChestAddPageState extends State<ChestAddPage> {
                   Navigator.of(context).pop(_text);
                 },
                 child: Text('完了', style: TextStyle(color: Colors.white)),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              // 横幅いっぱいに広げる
-              width: double.infinity,
-              // キャンセルボタン
-              child: TextButton(
-                // ボタンをクリックした時の処理
-                onPressed: () {
-                  // "pop"で前の画面に戻る
-                  Navigator.of(context).pop();
-                },
-                child: Text('キャンセル'),
               ),
             ),
           ],

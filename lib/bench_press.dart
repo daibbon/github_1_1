@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github_1/bench_add.dart';
+import 'package:github_1/workout_set.dart';
 
 
 
@@ -12,7 +13,7 @@ class BenchPressPage extends StatefulWidget {
 
 class _BenchPressPageState extends State<BenchPressPage> {
   // Todoリストのデータ
-  List<String> chestList = [];
+  List<String> _list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +28,11 @@ class _BenchPressPageState extends State<BenchPressPage> {
         backgroundColor: CupertinoColors.white,
       ),
       body: ListView.builder(
-        itemCount: chestList.length,
+        itemCount: _list.length,
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              title: Text(chestList[index]),
+              title: Text(_list[index]),
               // onTap: (){
               //   Navigator.push(context, MaterialPageRoute(builder: (context)=>ChestPage()));
               // },
@@ -59,7 +60,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
             // キャンセルした場合は newListText が null となるので注意
             setState(() {
               // リスト追加
-              chestList.add(newListText);
+              _list.add(newListText);
             });
           }
         },

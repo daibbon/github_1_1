@@ -3,7 +3,8 @@ import 'package:github_1/chest_page.dart';
 
 
 class MigileftScreen extends StatelessWidget {
-  const MigileftScreen({Key? key}) : super(key: key);
+  // Todoリストのデータ
+  List<String> chestList = [];
 
   @override
   Widget build(BuildContext context) {

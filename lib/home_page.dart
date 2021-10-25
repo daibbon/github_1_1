@@ -30,15 +30,15 @@ class _HomePageState extends State<HomePage> {
             leading: Icon(Icons.people),
             title: Text("胸"),
             trailing: Icon(Icons.more_vert),
-            onTap: (){
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ChestPage();
-                  },
-                ),
-              );
-            },
+            // onTap: (){
+            //   Navigator.of(context).push(
+            //     MaterialPageRoute(
+            //       builder: (context) {
+            //         return ChestPage();
+            //       },
+            //     ),
+            //   );
+            // },
           ),
         ),
       ],
