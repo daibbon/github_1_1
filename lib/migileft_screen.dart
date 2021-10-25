@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:github_1/chest_page.dart';
 
+import 'method.dart';
+
 
 class MigileftScreen extends StatelessWidget {
   // Todoリストのデータ
@@ -22,15 +24,7 @@ class MigileftScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.people),
-                      title: Text("胸"),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ChestPage()));
-                      },
-                    ),
-                  ),
+                  buildCard(context),
                 ]
             )
         ),
