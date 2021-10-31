@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChestAddPage extends StatefulWidget {
+  ChestAddPage(this.areaId);
+  final String areaId ;
+
   @override
   _ChestAddPageState createState() => _ChestAddPageState();
 }
@@ -14,14 +18,14 @@ class _ChestAddPageState extends State<ChestAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('メニュー追加'),
+        title:const Text('メニュー追加'),
         elevation: 0.5,
         centerTitle: true,
         backgroundColor: CupertinoColors.white,
       ),
       body: Container(
         // 余白を付ける
-        padding: EdgeInsets.all(64),
+        padding:const EdgeInsets.all(64),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -46,10 +50,17 @@ class _ChestAddPageState extends State<ChestAddPage> {
               width: double.infinity,
               // リスト追加ボタン
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(_text);
+                onPressed: () async {
+                  await FirebaseFirestore.instance
+                      .collection('users') 
+                      .doc('user_1') 
+                      .collection('areas') 
+                      .doc(widget.areaId)
+                      .collection('menus')
+                      .add({'name': _text}); // データ
+                  Navigator.of(context).pop();
                 },
-                child: Text('完了', style: TextStyle(color: Colors.white)),
+                child: const Text('完了', style: TextStyle(color: Colors.white)),
               ),
             ),
             const SizedBox(height: 8),
@@ -63,7 +74,7 @@ class _ChestAddPageState extends State<ChestAddPage> {
                   // "pop"で前の画面に戻る
                   Navigator.of(context).pop();
                 },
-                child: Text('キャンセル'),
+                child: const Text('キャンセル'),
               ),
             ),
           ],
