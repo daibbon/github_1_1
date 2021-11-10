@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:github_1/home_page2.dart';
+import 'package:github_1/nickname.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -16,66 +19,65 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Form(
         // Formのkeyに指定する
         key: _formKey,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'TRECA',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
 
-                SizedBox(height: 16),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'ニックネーム',
-                  ),
-                  keyboardType: TextInputType.name,
-                  // ニックネームのバリデーション
-                  validator: (String? value) {
-                    // ニックネームが入力されていない場合
-                    if (value?.isEmpty == true) {
-                      // 問題があるときはメッセージを返す
-                      return 'ニックネームを入力して下さい';
-                    }
-                    // 問題ないときはnullを返す
-                    return null;
-                  },
-                ),
-
-                SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    // ログインボタンをタップしたときの処理
-                    onPressed: () => _onSignIn(),
-                    child: Text('はじめる'),
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 150, 10, 30),
+                child: Text(
+                  'Welcome to TRECA!',
+                  style: GoogleFonts.notoSans(
+                    textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 34.0),
                   ),
                 ),
+              ),
 
-              ],
-            ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                child: Image(
+                  width: 411,
+                  image: AssetImage('images/training-home-concept_52683-37092.jpg'),
+                ),
+              ),
+
+
+
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 60, 10, 0),
+                child: Text(
+                  '利用規約に同意する',
+                  style: GoogleFonts.notoSans(
+                    textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                  ),
+                ),
+              ),
+
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 40, 10, 20),
+                child: SizedBox(
+                    width: 317,
+                    height: 40,
+                    child: ElevatedButton(
+                      // ログインボタンをタップしたときの処理
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>nickname()));
+                      },
+                      child: Text('サインアップ',
+                        style: GoogleFonts.notoSans(
+                          textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                        ),
+                      ),
+                    )
+                ),
+              ),
+
+            ],
           ),
         ),
       ),
     );
   }
-
-  void _onSignIn() {
-    // 入力内容を確認する
-    if (_formKey.currentState?.validate() != true) {
-      // エラーメッセージがあるため処理を中断する
-      return;
-    }
-    // 画像一覧画面に切り替え
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => Migileft(),
-      ),
-    );
-  }
-
 }
 

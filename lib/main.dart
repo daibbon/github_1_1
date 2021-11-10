@@ -18,8 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TRECA',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
+      theme: ThemeData.from(
+        colorScheme: ColorScheme.light(
+          primary: Color(0xFFFFCC80),
+        ),
       ),
       // アプリ起動時にログイン画面を表示
       home: SignInScreen(),
