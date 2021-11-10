@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:github_1/chest_page.dart';
 import 'package:github_1/method2.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class MigileftScreen extends StatefulWidget {
@@ -27,27 +28,32 @@ class _MigileftState extends State<MigileftScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 100, left: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('トレーニング',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[800], fontSize: 30),)
-                    ],
+    return Scaffold(
+          body: Container(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, 100, 200, 20),
+                      // padding: EdgeInsets.all(20.0),
+                      child: Text(
+                          "トレーニング",
+                          style: GoogleFonts.notoSans(
+                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 26.0),
+                          )
+                      )),
+
+                  Container(
+                    child: Expanded(
+                      //引数にstream名/フィールド名/画面遷移のメソッドを代入する
+                      child: makingList(_makingStream, 'name', _onTap),
+                    ),
                   ),
-                ),
-                Expanded(
-                  //引数にstream名/フィールド名/画面遷移のメソッドを代入する
-                  child: makingList(_makingStream, 'name', _onTap),
-                ),
-              ]
+                ]
+            ),
           )
-      ),
-    );
+
+      );
   }
 }

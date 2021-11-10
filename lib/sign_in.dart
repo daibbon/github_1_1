@@ -42,8 +42,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
 
-
-
               Container(
                 margin: EdgeInsets.fromLTRB(10, 60, 10, 0),
                 child: Text(

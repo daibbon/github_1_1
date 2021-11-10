@@ -26,21 +26,33 @@ Widget makingList(Stream<QuerySnapshot> _makingStream, String fieldName, Functio
         return Text("ロード中");
       }
       //　データの取得
-      return ListView(
-        children: snapshot.data!.docs.map((DocumentSnapshot document) {
-          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-          return Card(
-            child:ListTile(
-                leading: Icon(Icons.people),
-                title: Text("${document[fieldName]}"),
-                subtitle: Text(document.id),
+      return Container(
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        child: ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+            return InkWell(
                 onTap: (){
                   function(document[fieldName],document.id);
-                }
-            ),
-          );
-        }).toList(),
+                },
+              child: Container(
+                margin: EdgeInsets.fromLTRB(18, 6, 18, 6),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFFbdbdbd)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text("${document[fieldName]}"),
+                      // subtitle: Text(document.id),
+                ),
+              ),
+            );
+
+          }).toList(),
+        ),
       );
+
     },
   );
 }

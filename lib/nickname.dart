@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github_1/home_page2.dart';
+import 'package:github_1/migileft_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
@@ -96,7 +97,7 @@ class _nicknameState extends State<nickname> {
     // 画像一覧画面に切り替え
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => Migileft(),
+        builder: (_) => MigileftScreen(),
       ),
     );
   }
