@@ -23,7 +23,11 @@ class _BenchAddPageState extends State<BenchAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.close),
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(child: Icon(Icons.close))),
         actions: <Widget>[
           Container(
               margin: EdgeInsets.fromLTRB(0, 6, 24, 0),

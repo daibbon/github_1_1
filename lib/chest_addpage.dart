@@ -18,11 +18,18 @@ class _ChestAddPageState extends State<ChestAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(child: Icon(Icons.close))),
         title:const Text('メニュー追加'),
         elevation: 0.5,
         centerTitle: true,
         backgroundColor: CupertinoColors.white,
+        automaticallyImplyLeading: false,
       ),
+
       body: Container(
         // 余白を付ける
         padding:const EdgeInsets.all(64),
