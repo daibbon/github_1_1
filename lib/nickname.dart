@@ -19,70 +19,74 @@ class _nicknameState extends State<nickname> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
-        title: Text('サインアップ',
-          style: TextStyle(color: Colors.black),
-        ),
-        // centerTitle: true,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
       ),
+
       body: Form(
         // Formのkeyに指定する
         key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(10, 60, 10, 30),
-              child: Text(
-                'ニックネームを\n入力してください',
-                style: GoogleFonts.notoSans(
-                  textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                ),
-              ),
-            ),
+        child: Container(
+          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
 
-            SizedBox(height: 16),
-            TextFormField(
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: 'ニックネーム',
-
-              ),
-              keyboardType: TextInputType.name,
-              // ニックネームのバリデーション
-              validator: (String? value) {
-                // ニックネームが入力されていない場合
-                if (value?.isEmpty == true) {
-                  // 問題があるときはメッセージを返す
-                  return 'ニックネームを入力して下さい';
-                }
-                // 問題ないときはnullを返す
-                return null;
-              },
-            ),
-
-            // SizedBox(height: 16),
-            Container(
-              margin: EdgeInsets.fromLTRB(10, 60, 10, 30),
-              child: SizedBox(
-                width: 317,
-                height: 40,
-
-                child: ElevatedButton(
-                  // ログインボタンをタップしたときの処理
-                  onPressed: () => _onSignIn(),
-                  child: Text('トレーニングをはじめる',
-                    style: GoogleFonts.notoSans(
-                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                    ),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                child: Text(
+                  'サインアップ',
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.notoSans(
+                    textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
                   ),
                 ),
               ),
-            )
-          ],
+
+              Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  child: SizedBox(height: 16,)),
+              TextFormField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'ニックネーム',
+                ),
+                keyboardType: TextInputType.name,
+                // ニックネームのバリデーション
+                validator: (String? value) {
+                  // ニックネームが入力されていない場合
+                  if (value?.isEmpty == true) {
+                    // 問題があるときはメッセージを返す
+                    return 'ニックネームを入力して下さい';
+                  }
+                  // 問題ないときはnullを返す
+                  return null;
+                },
+              ),
+
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 40, 10, 10),
+                child: SizedBox(
+                  width: 317,
+                  height: 40,
+                  child: ElevatedButton(
+                    // ログインボタンをタップしたときの処理
+                    onPressed: () => _onSignIn(),
+                    child: Text('TRECAをはじめる',
+                      style: GoogleFonts.notoSans(
+                        textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+
+            ],
+          ),
         ),
       ),
     );
