@@ -16,6 +16,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
   // 入力されたテキストをデータとして持つ
   String _text = '';
   List _list = [
+
   ];
 
 
