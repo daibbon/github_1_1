@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:github_1/home_page2.dart';
 import 'package:github_1/nickname.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -43,28 +42,23 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
 
               Container(
-                margin: EdgeInsets.fromLTRB(10, 60, 10, 0),
-                child: Text(
-                  '利用規約に同意する',
-                  style: GoogleFonts.notoSans(
-                    textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                  ),
-                ),
-              ),
-
-              Container(
-                margin: EdgeInsets.fromLTRB(10, 40, 10, 20),
+                margin: EdgeInsets.fromLTRB(10, 80, 10, 20),
                 child: SizedBox(
                     width: 317,
                     height: 40,
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                      ),
                       // ログインボタンをタップしたときの処理
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>nickname()));
                       },
-                      child: Text('サインアップ',
+                      child: Text('はじめる',
                         style: GoogleFonts.notoSans(
-                          textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                          textStyle: TextStyle(
+                              color: Colors.black.withOpacity(0.8),
+                              fontWeight: FontWeight.bold, fontSize: 14.0),
                         ),
                       ),
                     )

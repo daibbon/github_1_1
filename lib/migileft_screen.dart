@@ -30,26 +30,31 @@ class _MigileftState extends State<MigileftScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
           body: Container(
+            margin: EdgeInsets.fromLTRB(10, 100, 10, 10),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
 
                   Container(
-                      margin: EdgeInsets.fromLTRB(0, 100, 200, 20),
+                      width: double.infinity,
+                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                       // padding: EdgeInsets.all(20.0),
                       child: Text(
                           "トレーニング",
+                          textAlign: TextAlign.left,
                           style: GoogleFonts.notoSans(
-                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 26.0),
+                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0),
                           )
                       )),
 
                   Container(
+                    // margin入れたらerror
                     child: Expanded(
                       //引数にstream名/フィールド名/画面遷移のメソッドを代入する
                       child: makingList(_makingStream, 'name', _onTap),
                     ),
                   ),
+
                 ]
             ),
           )
