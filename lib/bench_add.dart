@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:flutter/services.dart';
 
 class BenchAddPage extends StatefulWidget {
-  const BenchAddPage({Key? key}) : super(key: key);
+  final String areaId, menuId;
+
+  BenchAddPage(this.areaId, this.menuId);
 
   @override
   _BenchAddPageState createState() => _BenchAddPageState();
@@ -13,11 +17,40 @@ class BenchAddPage extends StatefulWidget {
 
 class _BenchAddPageState extends State<BenchAddPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // 入力されたテキストをデータとして持つ
-  String _text = '';
-  List _list = [
-  ];
 
+  // 入力されたテキストをデータとして持つ
+  List<Item> items = [];
+
+  void initState() {
+    items.add(Item.create(0, "", ""));
+  }
+
+  @override
+  void dispose() {
+    items.forEach((element) {
+      element.dispose();
+    });
+
+    super.dispose();
+  }
+
+  void add() {
+    setState(() {
+      items.add(Item.create(items.last.id, "", ""));
+    });
+  }
+
+  void remove() {
+    final removedItem = items.last;
+    setState(() {
+      items.removeLast();
+    });
+    // itemのcontrollerをすぐdisposeすると怒られるので
+    // 少し時間をおいてからdipose()
+    Future.delayed(Duration(seconds: 1)).then((value) {
+      removedItem.dispose();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,199 +64,85 @@ class _BenchAddPageState extends State<BenchAddPage> {
         actions: <Widget>[
           Container(
               margin: EdgeInsets.fromLTRB(0, 6, 24, 0),
-              child:
-              SizedBox(
+              child: SizedBox(
                 width: 50,
-                height:40,
+                height: 40,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BenchAddPage()));
+                    List<Map<String, dynamic>> post = [];
+
+                    for (int i = 0; i < items.length; i++) {
+                      var e = items[i];
+                      if (e.timesController != '') {
+                        post.add({
+                          'weight': e.weightController.text,
+                          'times': e.timesController.text,
+                        });
+                      }
+                    }
+                    FirebaseFirestore.instance.collection('users').doc('user_1')
+                        .collection('areas').doc(widget.areaId)
+                        .collection('menus').doc(widget.menuId)
+                        .collection('posts').add({
+                      // 'set': FieldValue.arrayUnion([post]),
+                      'set': post,
+                      'createdAt' : Timestamp.fromDate(DateTime.now()),
+                    });
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xFF90CAF9),
                     elevation: 0,
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 5,
                       vertical: 10,
                     ),
                   ),
                   child: Text('保存',
                       style: GoogleFonts.notoSans(
-                        textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14.0),
                       )),
-
                 ),
-              )
-          ),
+              )),
         ],
         automaticallyImplyLeading: false,
-        // title: Text('ベンチプレス',
-        //   style: TextStyle(color: Colors.black),
-        // ),
-        // centerTitle: true,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
       ),
-      body: Form(
-        // Formのkeyに指定する
-        key: _formKey,
-
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
           margin: EdgeInsets.fromLTRB(32, 32, 32, 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            children: <Widget>[
+              //項目
               Container(
                 margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: itemNameUI(),
+              ),
+              //入力リスト
+              Form(
+                key: _formKey,
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Text('セット',
-                          style: GoogleFonts.notoSans(
-                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                          )
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 42, 0),
-                          child: Text('重さ',
-                              style: GoogleFonts.notoSans(
-                                textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                              )
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                          child: Text('回数',
-                              style: GoogleFonts.notoSans(
-                                textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                              )
-                          ),
-                        ),
-                      ],
-                    ),
+                    ...items.map((item) => textFieldUI(item)),
                   ],
                 ),
               ),
-              Flexible(
-                child: ListView.builder(
-                  itemCount: _list.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _list[index];
-                  },
-                ),
-              ),
+              //セット追加
               Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: SizedBox(
-                  width: 360,
-                  height: 40,
-                  child:ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        _list.add(
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              child: SizedBox(
-                                width: 360,
-                                height: 40,
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                      child: Text(_list.length.toString(),
-                                          style: GoogleFonts.notoSans(
-                                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                                          )
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.fromLTRB(0, 0, 24, 0),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 30,
-                                                  child: TextField(
-                                                    // autofocus: true,
-                                                    // 入力されたテキストの値を受け取る（valueが入力されたテキスト）
-                                                    // onChanged: (String value) {
-                                                    //   // データが変更したことを知らせる（画面を更新する）
-                                                    //   setState(() {
-                                                    //     // データを変更
-                                                    //     _text = value;
-                                                    //   });
-                                                    // },
-                                                  ),
-                                                ),
-                                                Text('kg',
-                                                    style: GoogleFonts.notoSans(
-                                                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                                                    )
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 30,
-                                                  child: TextField(
-                                                    // autofocus: true,
-                                                    // 入力されたテキストの値を受け取る（valueが入力されたテキスト）
-                                                    // onChanged: (String value) {
-                                                    //   // データが変更したことを知らせる（画面を更新する）
-                                                    //   setState(() {
-                                                    //     // データを変更
-                                                    //     _text = value;
-                                                    //   });
-                                                    // },
-                                                  ),
-                                                ),
-                                                Text('回',
-                                                    style: GoogleFonts.notoSans(
-                                                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                                                    )
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                        );
-                      });
-                    },
-                    label: Text('セットを追加',
-                        style: GoogleFonts.notoSans(
-                          textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                        )
-                    ),
-                    icon: Icon(Icons.add,
-                      color: Color(0xFF0FFCC80),),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFffffff),
-                      onPrimary: Color(0xFF000000).withOpacity(0.7),
-                      elevation: 0,
-                      // shape: const StadiumBorder(),
-                    ),
-                  ),
-                ),
+                child: setAddUI(),
+              ),
+              //セット削除（テスト用）
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: setDeleteUI(),
               ),
             ],
           ),
@@ -231,142 +150,214 @@ class _BenchAddPageState extends State<BenchAddPage> {
       ),
     );
   }
+
+  Widget itemNameUI() {
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Text(
+            'セット',
+            style: GoogleFonts.notoSans(
+              textStyle:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+            ),
+          ),
+        ),
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 42, 0),
+              child: Text(
+                '重さ',
+                style: GoogleFonts.notoSans(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16.0),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+              child: Text(
+                '回数',
+                style: GoogleFonts.notoSans(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16.0),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget textFieldUI(Item item) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: SizedBox(
+        width: 360,
+        height: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              child: Text(
+                item.id.toString(),
+                style: GoogleFonts.notoSans(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 18.0),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 24, 0),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 30,
+                          child: TextField(
+                            controller: item.weightController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.singleLineFormatter,
+                              LengthLimitingTextInputFormatter(10),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          'kg',
+                          style: GoogleFonts.notoSans(
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 30,
+                          child: TextField(
+                            controller: item.timesController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.singleLineFormatter,
+                              LengthLimitingTextInputFormatter(10),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          '回',
+                          style: GoogleFonts.notoSans(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget setAddUI() {
+    return SizedBox(
+      width: 360,
+      height: 40,
+      child: ElevatedButton.icon(
+        onPressed: () {
+          add();
+        },
+        label: Text('セットを追加',
+            style: GoogleFonts.notoSans(
+              textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+            )),
+        icon: const Icon(
+          Icons.add,
+          color: Color(0xFF0FFCC80),
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFFffffff),
+          onPrimary: Color(0xFF000000).withOpacity(0.7),
+          elevation: 0,
+          // shape: const StadiumBorder(),
+        ),
+      ),
+    );
+  }
+//test用セット削除UI
+  Widget setDeleteUI() {
+    return SizedBox(
+      width: 360,
+      height: 40,
+      child: ElevatedButton.icon(
+        onPressed: () {
+          remove();
+        },
+        label: Text('セットを削除',
+            style: GoogleFonts.notoSans(
+              textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+            )),
+        icon: const Icon(
+          Icons.add,
+          color: Color(0xFF0FFCC80),
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFFffffff),
+          onPrimary: Color(0xFF000000).withOpacity(0.7),
+          elevation: 0,
+          // shape: const StadiumBorder(),
+        ),
+      ),
+    );
+  }
 }
 
+class Item {
+  final int id;
+  final TextEditingController weightController;
+  final TextEditingController timesController;
 
+  Item({
+    required this.id,
+    required this.weightController,
+    required this.timesController,
+  });
 
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:github_1/workout_set.dart';
-//
-//
-// class BenchAddPage extends StatefulWidget {
-//   @override
-//   _BenchAddPageState createState() => _BenchAddPageState();
-// }
-//
-// class _BenchAddPageState extends State<BenchAddPage> {
-//   // 入力されたテキストをデータとして持つ
-//   String _text = '';
-//   List _list = [
-//     WorkoutSet(),
-//   ];
-//
-//   // データを元に表示するWidget
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('ベンチプレス'),
-//         elevation: 0.5,
-//         centerTitle: true,
-//         backgroundColor: CupertinoColors.white,
-//       ),
-//         body:Container(
-//           margin: EdgeInsets.all(20),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Column(
-//                 children: [
-//                   SizedBox(
-//                     width: 350,
-//                     height: 30,
-//                     child: ElevatedButton(
-//                       child: Text('セット追加',
-//                         style: TextStyle(fontWeight: FontWeight.bold),),
-//                       style: ElevatedButton.styleFrom(
-//                         primary: Colors.orange,
-//                         onPrimary: Colors.white,
-//                       ),
-//                       onPressed: () {
-//                         setState(() {
-//                           _list.add(
-//                             WorkoutSet(),
-//                           );
-//                         });
-//                       },
-//                     ),
-//                   ),
-//                   IconButton(
-//                     icon: Icon(Icons.remove),
-//                     onPressed: () {
-//                       if (_list.length == 1) {
-//                         Fluttertoast.showToast(msg: "これ以上減らせません！！");
-//                       } else {
-//                         setState(() {
-//                           _list.removeAt(_list.length - 1);
-//                         });
-//                       }
-//                     },
-//                   ),
-//                 ],
-//               ),
-//               Flexible(
-//                 child: ListView.builder(
-//                   itemCount: _list.length,
-//                   itemBuilder: (BuildContext context, int index) {
-//                     return _list[index];
-//                   },
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//
-//       // body: Container(
-//       //
-//       //   child: Padding(
-//       //     padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
-//       //     child: ListView.builder(
-//       //       itemCount: 1,
-//       //       itemBuilder: (context, index) {
-//       //         return
-//       //
-//       //           Card(
-//       //           child: TextField(
-//       //             decoration: InputDecoration(
-//       //               border: InputBorder.none,
-//       //             ),
-//       //               // 入力されたテキストの値を受け取る（valueが入力されたテキスト）
-//       //               onChanged: (String value) {
-//       //                 // データが変更したことを知らせる（画面を更新する）
-//       //                 setState(() {
-//       //                   // データを変更
-//       //                   _text = value;
-//       //                 });
-//       //               },
-//       //             ),
-//       //           );
-//       //       },
-//       //     ),
-//       //   ),
-//       // ),
-//
-//         floatingActionButton:
-//         SizedBox(
-//           width: 360,
-//           height: 50,
-//           child:ElevatedButton(
-//             child: const Text('入力完了',
-//               style: TextStyle(
-//                 fontWeight: FontWeight.bold,
-//                 fontSize: 16,
-//               ),
-//             ),
-//             style: ElevatedButton.styleFrom(
-//               primary: Colors.orange,
-//               onPrimary: Colors.white,
-//               shape: const StadiumBorder(),
-//             ),
-//             onPressed: () {
-//               Navigator.of(context).pop(_text);
-//             },
-//           ),
-//         )
-//     );
-//   }
-// }
-//
-//
+  factory Item.create(int id, String weight, String times) {
+    return Item(
+      id: id + 1,
+      weightController: TextEditingController(text: weight),
+      timesController: TextEditingController(text: times),
+    );
+  }
+
+  void dispose() {
+    weightController.dispose();
+    timesController.dispose();
+  }
+}
+
+class Set {
+  final String weight, times;
+
+  Set({
+    required this.weight, required this.times
+  });
+}
