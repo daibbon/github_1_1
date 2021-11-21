@@ -1,10 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:github_1/chest_page.dart';
 import 'package:github_1/method2.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class MigileftScreen extends StatefulWidget {
   @override
@@ -29,32 +29,43 @@ class _MigileftState extends State<MigileftScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: Container(
-            margin: EdgeInsets.fromLTRB(10, 100, 10, 10),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+        appBar: AppBar(
+          backgroundColor: CupertinoColors.white,
+          elevation: 0,
+        ),
 
-                  //タイトル（トレーニング）
-                  Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      // padding: EdgeInsets.all(20.0),
-                      child: Text(
-                          "トレーニング",
-                          textAlign: TextAlign.left,
-                          style: GoogleFonts.notoSans(
-                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0),
-                          )
-                      )),
-
-                  //部位一覧
-                  Container(
-                    // margin入れたらerror
-                    child: Expanded(
-                      //引数にstream名/フィールド名/画面遷移のメソッドを代入する
-                      child: makingList(_makingStream, 'name', _onTap),
+        body:
+        Container(
+          margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //トレーニング
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.fromLTRB(0, 24, 0, 56),
+                  child: Text(
+                    'トレーニング',
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.notoSans(
+                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0),
                     ),
+                  ),
+                ),
+
+                //一番上の線
+                const Divider(
+                  color: Color(0xFFCFCFCF),
+                  indent: 0,
+                  endIndent: 0,
+                  thickness: 1,
+                  height: 0,
+                ),
+
+                //部位一覧
+                  Container(
+                    //引数にstream名/フィールド名/画面遷移のメソッドを代入する
+                    child: makingList(_makingStream, 'name', _onTap),
                   ),
 
                 ]

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ★　データベースのデータをもとにリストを作成するウィジェット　★
 // 【利用時の注意】
@@ -29,6 +30,8 @@ Widget makingList(Stream<QuerySnapshot> _makingStream, String fieldName, Functio
       return Container(
         margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: ListView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
             return InkWell(
@@ -36,19 +39,56 @@ Widget makingList(Stream<QuerySnapshot> _makingStream, String fieldName, Functio
                   function(document[fieldName],document.id);
                 },
               child: Container(
-                margin: EdgeInsets.fromLTRB(18, 6, 18, 6),
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                //コンテナ設定
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFFbdbdbd)),
-                  borderRadius: BorderRadius.circular(12),
+                    border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFCFCFCF)),)
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text("${document[fieldName]}"),
-                      // subtitle: Text(document.id),
-                ),
-              ),
-            );
 
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20, 10, 20, 36),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("${document[fieldName]}",
+                        style: GoogleFonts.notoSans(
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.0,color: Color(0xFF000000).withOpacity(0.7)),), // subtitle: Text(document.id),
+                ),
+                      //削除ボタン
+                      InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            // isScrollControlled: true,
+                            shape: RoundedRectangleBorder( // <= 追加
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                            ),
+                            //削除POP
+                            builder: (context) => DraggableScrollableSheet(
+                              builder: (context, scrollController) =>
+                              //テキスト
+                              Container(
+                                  // margin: EdgeInsets.only(top: 5),
+                                  decoration: BoxDecoration(
+                                    //モーダル自体の色
+                                    color: Colors.white,
+                                  ),
+                                  child: Text("削除する")),
+                            ),
+                          );
+                        },
+                        //アイコン
+                        child: Icon(
+                              Icons.more_horiz,
+                              color: Colors.black// アイコンの色を設定できる
+                          ),
+                      ),
+                    ],
+                  ),
+              ),
+              )
+            );
           }).toList(),
         ),
       );
