@@ -35,6 +35,7 @@ class _MigileftState extends State<MigileftScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
 
+                  //タイトル（トレーニング）
                   Container(
                       width: double.infinity,
                       margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -47,6 +48,7 @@ class _MigileftState extends State<MigileftScreen> {
                           )
                       )),
 
+                  //部位一覧
                   Container(
                     // margin入れたらerror
                     child: Expanded(

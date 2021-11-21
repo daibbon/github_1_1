@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:github_1/migileft_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 const _url = 'https://pub.dev/packages/url_launcher';
 
 class nickname extends StatefulWidget {
@@ -28,17 +27,17 @@ class _nicknameState extends State<nickname> {
       ),
 
       body: Form(
-        // Formのkeyに指定する
         key: _formKey,
         child: Container(
-          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          margin: EdgeInsets.fromLTRB(24, 12, 24, 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
 
+            //  サインアップ
             Container(
             width: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: Text(
               'サインアップ',
               textAlign: TextAlign.left,
@@ -48,10 +47,12 @@ class _nicknameState extends State<nickname> {
             ),
           ),
 
+            //ニックネーム入力
             Container(
-              margin: EdgeInsets.fromLTRB(0, 30, 0, 20),
+              margin: EdgeInsets.fromLTRB(0, 36, 0, 20),
               child: Column(
                 children: [
+                  //ニックネーム
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     width: double.infinity,
@@ -63,11 +64,17 @@ class _nicknameState extends State<nickname> {
                       ),
                     ),
                   ),
+                  //入力フォーム
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
                     child: TextFormField(
                       autofocus: true,
                       keyboardType: TextInputType.name,
+                      //デコ
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(), // 外枠付きデザイン
+                        hintText: 'トレ太郎', // 入力ヒント
+                      ),
                       // ニックネームのバリデーション
                       validator: (String? value) {
                         // ニックネームが入力されていない場合
@@ -84,8 +91,9 @@ class _nicknameState extends State<nickname> {
               ),
             ),
 
+          //サインアップボタン
           Container(
-            margin: EdgeInsets.fromLTRB(0, 80, 0, 0),
+            margin: EdgeInsets.fromLTRB(0, 64, 0, 0),
             child: SizedBox(
               width: 363,
               height: 40,
@@ -106,26 +114,32 @@ class _nicknameState extends State<nickname> {
             ),
           ),
 
+          //利用規約
           Container(
             margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: Column(
               children: [
+                //利用規約説明文
                 Container(
-                  margin: EdgeInsets.fromLTRB(5, 15, 0, 0),
+                  margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   width: double.infinity,
                   child: Text(
-                    'サインアップすることで、あなたは以下に同意したことになり\nます',
+                    'サインアップすることで、あなたは以下に同意したことになり\nます。',
                     textAlign: TextAlign.left,
                     style: GoogleFonts.notoSans(
-                      textStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 12.0),
+                      textStyle: TextStyle(
+                          color: Color(0xFF9e9e9e),
+                          fontWeight: FontWeight.bold, fontSize: 12.0),
                     ),
                   ),
+
                 ),
 
+                //→利用規約
                 InkWell(
-                  onTap: _launchURL,
+                  // onTap: _launchURL,
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(5, 15, 0, 0),
+                    margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
                     child: Text(
                       '利用規約',
                       style: GoogleFonts.notoSans(
@@ -136,11 +150,10 @@ class _nicknameState extends State<nickname> {
                     ),
                   ),
                 ),
-
               ],
+
             ),
           ),
-
             ],
           ),
         ),
@@ -161,6 +174,8 @@ class _nicknameState extends State<nickname> {
       ),
     );
   }
+
+  //利用規約リンク
   void _launchURL() async =>
       await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:github_1/nickname.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class SignInScreen extends StatefulWidget {
   @override
   _SignInScreenState createState() => _SignInScreenState();
@@ -15,14 +14,14 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Form(
-        // Formのkeyに指定する
         key: _formKey,
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-
+              //Welcome to TRECA
               Container(
                 margin: EdgeInsets.fromLTRB(10, 150, 10, 30),
                 child: Text(
@@ -33,6 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
 
+              //画像
               Container(
                 margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: Image(
@@ -41,6 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
 
+              //ログインボタン
               Container(
                 margin: EdgeInsets.fromLTRB(10, 80, 10, 20),
                 child: SizedBox(
@@ -54,6 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>nickname()));
                       },
+                      //ログインボタン詳細
                       child: Text('はじめる',
                         style: GoogleFonts.notoSans(
                           textStyle: TextStyle(
