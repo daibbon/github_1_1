@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:github_1/bench_add.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -77,8 +75,9 @@ class _BenchPressPageState extends State<BenchPressPage> {
 
       //セット追加ボタン
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFffffff),
-        foregroundColor: const Color(0xFFFFCC80),
+        backgroundColor: const Color(0xFFffad42),
+        foregroundColor: const Color(0xFFffffff),
+        // foregroundColor: const Color(0xFFFFCC80),
         onPressed: () {
           // Navigator.push(context, MaterialPageRoute(builder: (context)=>SetAdd2()));
           showMaterialModalBottomSheet(
@@ -129,7 +128,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                 }
                 return InkWell(
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
                     decoration: BoxDecoration(
                       border: Border.all(color: Color(0xFFbdbdbd)),
                       borderRadius: BorderRadius.circular(12),
@@ -304,7 +303,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                       textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0,color: Color(0xFFbdbdbd)),
                     )),
               ),
-
+              //回数
               Container(
                 margin: EdgeInsets.fromLTRB(16, 0, 8, 0),
                 child: Text(record.times,
@@ -312,6 +311,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                       textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
                     )),
               ),
+              //回
               Container(
                 margin: EdgeInsets.fromLTRB(0, 4, 12, 0),
                 child: Text('回',

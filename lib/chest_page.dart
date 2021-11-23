@@ -109,7 +109,7 @@ class _ChestPageState extends State<ChestPage> {
                 ),
             ),
             style: ElevatedButton.styleFrom(
-              primary: Color(0xFF64B5F6),
+              primary: Color(0xFF90CAF9),
               elevation: 0,
               onPrimary: Color(0xFFffffff),
             ),

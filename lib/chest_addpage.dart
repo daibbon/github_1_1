@@ -30,15 +30,14 @@ class _ChestAddPageState extends State<ChestAddPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: CupertinoColors.white,
         //戻るボタン
         leading: InkWell(
             onTap: () {
               Navigator.pop(context);
             },
             child: Container(child: Icon(Icons.close))),
-
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: CupertinoColors.white,
         actions: <Widget>[
           //保存ボタン
           Container(
@@ -56,7 +55,7 @@ class _ChestAddPageState extends State<ChestAddPage> {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF90CAF9),
+                  primary: Color(0xFFffad42),
                   elevation: 0,
                 ),
                 child: Text('保存',
@@ -98,6 +97,10 @@ class _ChestAddPageState extends State<ChestAddPage> {
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: TextFormField(
                     autofocus: true,
+                    style: GoogleFonts.notoSans(
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 22.0,),
+                    ),
                     keyboardType: TextInputType.name,
                     onChanged: (String value) {
                       // データが変更したことを知らせる（画面を更新する）
