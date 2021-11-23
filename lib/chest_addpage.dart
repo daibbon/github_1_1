@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChestAddPage extends StatefulWidget {
   ChestAddPage(this.areaId);
@@ -11,80 +12,121 @@ class ChestAddPage extends StatefulWidget {
 }
 
 class _ChestAddPageState extends State<ChestAddPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // 入力されたテキストをデータとして持つ
   String _text = '';
-  // データを元に表示するWidget
+
+  void _onSignIn() {
+    // 入力内容を確認する
+    if (_formKey.currentState?.validate() != true) {
+      // エラーメッセージがあるため処理を中断する
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        //戻るボタン
         leading: InkWell(
             onTap: () {
               Navigator.pop(context);
             },
             child: Container(child: Icon(Icons.close))),
-        title:const Text('メニュー追加'),
-        elevation: 0.5,
-        centerTitle: true,
-        backgroundColor: CupertinoColors.white,
-        automaticallyImplyLeading: false,
-      ),
 
-      body: Container(
-        // 余白を付ける
-        padding:const EdgeInsets.all(64),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // 入力されたテキストを表示
-            // Text(_text, style: TextStyle(color: Colors.blue)),
-            const SizedBox(height: 8),
-            // テキスト入力
-            TextField(
-              autofocus: true,
-              // 入力されたテキストの値を受け取る（valueが入力されたテキスト）
-              onChanged: (String value) {
-                // データが変更したことを知らせる（画面を更新する）
-                setState(() {
-                  // データを変更
-                  _text = value;
-                });
-              },
-            ),
-            const SizedBox(height: 8),
-            Container(
-              // 横幅いっぱいに広げる
-              width: double.infinity,
-              // リスト追加ボタン
-              child: ElevatedButton(
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: CupertinoColors.white,
+        actions: <Widget>[
+          //保存ボタン
+          Container(
+              margin: EdgeInsets.fromLTRB(0, 15, 24, 0),
+              child:
+              ElevatedButton(
                 onPressed: () async {
                   await FirebaseFirestore.instance
-                      .collection('users') 
-                      .doc('user_1') 
-                      .collection('areas') 
+                      .collection('users')
+                      .doc('user_1')
+                      .collection('areas')
                       .doc(widget.areaId)
                       .collection('menus')
                       .add({'name': _text}); // データ
                   Navigator.of(context).pop();
                 },
-                child: const Text('完了', style: TextStyle(color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF90CAF9),
+                  elevation: 0,
+                ),
+                child: Text('保存',
+                    style: GoogleFonts.notoSans(
+                      textStyle: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16.0),
+                    )),
+
+              )
+          ),
+        ],
+      ),
+
+      body: Form(
+        key: _formKey,
+        child: Container(
+          margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              //メニューを追加
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.fromLTRB(0, 24, 0, 56),
+                child: Text(
+                  'メニューを追加',
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.notoSans(
+                    textStyle: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 26.0),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              // 横幅いっぱいに広げる
-              width: double.infinity,
-              // キャンセルボタン
-              child: TextButton(
-                // ボタンをクリックした時の処理
-                onPressed: () {
-                  // "pop"で前の画面に戻る
-                  Navigator.of(context).pop();
-                },
-                child: const Text('キャンセル'),
+
+              //ニックネーム入力
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: TextFormField(
+                    autofocus: true,
+                    keyboardType: TextInputType.name,
+                    onChanged: (String value) {
+                      // データが変更したことを知らせる（画面を更新する）
+                      setState(() {
+                        // データを変更
+                        _text = value;
+                      });
+                    },
+                    //デコレーション
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(), // 外枠付きデザイン
+                      // hintText: 'ベンチプレス', // 入力ヒント
+                    ),
+                    // ニックネームのバリデーション
+                    validator: (String? value) {
+                      // ニックネームが入力されていない場合
+                      if (value?.isEmpty == true) {
+                        // 問題があるときはメッセージを返す
+                        return 'ニックネームを入力して下さい';
+                      }
+                      // 問題ないときはnullを返す
+                      return null;
+                    },
+                  ),
+                ),
               ),
-            ),
-          ],
+
+            ],
+          ),
         ),
       ),
     );
