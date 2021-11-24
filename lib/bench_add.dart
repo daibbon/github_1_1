@@ -20,6 +20,9 @@ class _BenchAddPageState extends State<BenchAddPage> {
 
   // 入力されたテキストをデータとして持つ
   List<Item> items = [];
+  String yyyy = DateTime.now().year.toString();
+  String MM = DateTime.now().month.toString().padLeft(2);
+  String dd = DateTime.now().day.toString().padLeft(2);
 
   void initState() {
     items.add(Item.create(0, "", ""));
@@ -145,15 +148,13 @@ class _BenchAddPageState extends State<BenchAddPage> {
                         size: 18,
                       ),
                     ),
-                    // Container(
-                    //   child: Text(
-                    //       '${createdAt.year}/${createdAt.month}/${createdAt.day}'
-                    //           '  ${createdAt.hour}:${createdAt.minute}',
-                    //       style: GoogleFonts.notoSans(
-                    //         textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                    //       )
-                    //   ),
-                    // ),
+                    Container(
+                      child: Text('$yyyy/$MM/$dd',
+                          style: GoogleFonts.notoSans(
+                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                          ),
+                      ),
+                    ),
                   ],
                 ),
               ),
