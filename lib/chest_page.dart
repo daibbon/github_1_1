@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,12 +33,10 @@ class _ChestPageState extends State<ChestPage> {
     super.initState();
 
     // データ取得先の指定
-    _makingStream = FirebaseFirestore.instance
-        .collection('users')
-        .doc('user_1')
-        .collection('areas')
-        .doc(areaId)
-        .collection('menus')
+    _makingStream = FirebaseFirestore.instance.collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('areas').doc(areaId)
+        .collection('menus').orderBy('createdAt', descending: false)
         .snapshots();
   }
 
@@ -94,7 +93,6 @@ class _ChestPageState extends State<ChestPage> {
           ],
         ),
       ),
-
       floatingActionButton:
       Container(
         margin: EdgeInsets.fromLTRB(0, 24, 0, 20),

@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:github_1/migileft_screen.dart';
 import 'package:github_1/sign_in.dart';
 
 Future<void> main() async {
@@ -12,6 +15,10 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+
+  final auth = FirebaseAuth.instance;
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +29,14 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // アプリ起動時にログイン画面を表示
-      home: SignInScreen(),
+      home: loginCheck(),
     );
+  }
+
+  Widget loginCheck(){
+    if (auth.currentUser != null) {
+      return MigileftScreen();
+    }
+    return SignInScreen();
   }
 }

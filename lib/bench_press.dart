@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,10 +37,11 @@ class _BenchPressPageState extends State<BenchPressPage> {
 
     // データ取得先の指定
     _makingStream = FirebaseFirestore.instance
-        .collection('users').doc('user_1')
+        .collection('users').doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('areas').doc(areaId)
         .collection('menus').doc(menuId)
-        .collection('posts').snapshots();
+        .collection('posts').orderBy('createdAt', descending: true)
+        .snapshots();
   }
 
   @override

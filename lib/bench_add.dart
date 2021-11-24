@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -83,7 +84,8 @@ class _BenchAddPageState extends State<BenchAddPage> {
                       });
                     }
                   }
-                  FirebaseFirestore.instance.collection('users').doc('user_1')
+                  FirebaseFirestore.instance.collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
                       .collection('areas').doc(widget.areaId)
                       .collection('menus').doc(widget.menuId)
                       .collection('posts').add({

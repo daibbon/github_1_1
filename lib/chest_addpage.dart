@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,13 +46,13 @@ class _ChestAddPageState extends State<ChestAddPage> {
               child:
               ElevatedButton(
                 onPressed: () async {
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc('user_1')
-                      .collection('areas')
-                      .doc(widget.areaId)
-                      .collection('menus')
-                      .add({'name': _text}); // データ
+                  await FirebaseFirestore.instance.collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('areas').doc(widget.areaId)
+                      .collection('menus').add({
+                         'name': _text,
+                         'createdAt': Timestamp.now()
+                      }); // データ
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
