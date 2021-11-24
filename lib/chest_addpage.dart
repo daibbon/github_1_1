@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ChestAddPage extends StatefulWidget {
@@ -103,6 +104,10 @@ class _ChestAddPageState extends State<ChestAddPage> {
                         fontWeight: FontWeight.bold, fontSize: 22.0,),
                     ),
                     keyboardType: TextInputType.name,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.singleLineFormatter,
+                      LengthLimitingTextInputFormatter(15),
+                    ],
                     onChanged: (String value) {
                       // データが変更したことを知らせる（画面を更新する）
                       setState(() {

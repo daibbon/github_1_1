@@ -278,7 +278,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
                                 FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(10),
+                                LengthLimitingTextInputFormatter(6),
                               ],
                             ),
                           ),
@@ -317,7 +317,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
                                 FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(10),
+                                LengthLimitingTextInputFormatter(6),
                               ],
                             ),
                           ),

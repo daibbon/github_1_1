@@ -163,6 +163,12 @@ class _BenchPressPageState extends State<BenchPressPage> {
 
 // 日付,セット,重量,回数のUI
   Widget headUI(DateTime createdAt) {
+    String yyyy = createdAt.year.toString();
+    String MM = createdAt.month.toString().padLeft(2);
+    String dd = createdAt.day.toString().padLeft(2);
+    String HH = createdAt.hour.toString().padLeft(2);
+    String mm = createdAt.minute.toString().padLeft(2, '0');
+
     return Container(
       margin: EdgeInsets.fromLTRB(4, 4, 16, 4),
       child: Column(
@@ -182,9 +188,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                     ),
                   ),
                   Container(
-                    child: Text(
-                        '${createdAt.year}/${createdAt.month}/${createdAt.day}'
-                            '  ${createdAt.hour}:${createdAt.minute}',
+                    child: Text('$yyyy/$MM/$dd   $HH:$mm',
                         style: GoogleFonts.notoSans(
                           textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
                         )

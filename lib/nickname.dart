@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:github_1/migileft_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -87,6 +88,10 @@ class _nicknameState extends State<nickname> {
                         controller: myController,
                         autofocus: true,
                         keyboardType: TextInputType.name,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.singleLineFormatter,
+                          LengthLimitingTextInputFormatter(15),
+                        ],
                         //デコ
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(), // 外枠付きデザイン
