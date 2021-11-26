@@ -9,9 +9,6 @@ import 'package:github_1/chest_page.dart';
 import 'package:github_1/method2.dart';
 //サインアウト用に仮挿入
 
-
-
-
 class MigileftScreen extends StatefulWidget {
   // final String uid ;
   // MigileftScreen(this.uid);
@@ -72,7 +69,7 @@ class _MigileftState extends State<MigileftScreen> {
                 //部位一覧
                 Container(
                     //引数にstream名/フィールド名/画面遷移のメソッドを代入する
-                  child: makingList(_makingStream, 'name', _onTap),
+                  child: makingList2(_makingStream, 'name', _onTap),
                 ),
               ],
             ),
