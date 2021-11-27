@@ -46,8 +46,8 @@ dependencies:
   url_launcher: ^6.0.12
 
 flutter_native_splash:
-  image: "images/Incrediboy.png"
-  color: "4DD0E1"
+  image: "images/treca_logo.png"
+  color: "DF5D3B"
 
 
 dev_dependencies:

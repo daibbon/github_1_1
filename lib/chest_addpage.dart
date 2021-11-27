@@ -47,6 +47,11 @@ class _ChestAddPageState extends State<ChestAddPage> {
               child:
               ElevatedButton(
                 onPressed: () async {
+                  // 入力内容を確認する
+                  if (_formKey.currentState?.validate() != true) {
+                    // エラーメッセージがあるため処理を中断する
+                    return;
+                  }
                   await FirebaseFirestore.instance.collection('users')
                       .doc(FirebaseAuth.instance.currentUser!.uid)
                       .collection('areas').doc(widget.areaId)
@@ -108,7 +113,7 @@ class _ChestAddPageState extends State<ChestAddPage> {
                       FilteringTextInputFormatter.singleLineFormatter,
                       LengthLimitingTextInputFormatter(15),
                     ],
-                    onChanged: (String value) {
+                    onChanged: (value) {
                       // データが変更したことを知らせる（画面を更新する）
                       setState(() {
                         // データを変更
@@ -121,11 +126,11 @@ class _ChestAddPageState extends State<ChestAddPage> {
                       // hintText: 'ベンチプレス', // 入力ヒント
                     ),
                     // ニックネームのバリデーション
-                    validator: (String? value) {
+                    validator: (value) {
                       // ニックネームが入力されていない場合
-                      if (value?.isEmpty == true) {
+                      if (value == null || value.isEmpty) {
                         // 問題があるときはメッセージを返す
-                        return 'ニックネームを入力して下さい';
+                        return 'メニューを入力してください';
                       }
                       // 問題ないときはnullを返す
                       return null;

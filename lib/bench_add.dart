@@ -164,6 +164,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                 margin: EdgeInsets.fromLTRB(0, 32, 0, 0),
                 child: itemNameUI(),
               ),
+
               //入力リスト
               Form(
                 key: _formKey,
