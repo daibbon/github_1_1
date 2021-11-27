@@ -68,12 +68,44 @@ class _ChestPageState extends State<ChestPage> {
             //部位名
             Container(
               width: double.infinity,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 56),
-              child: Text(areaName,
-                textAlign: TextAlign.left,
-                style: GoogleFonts.notoSans(
-                  textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
-                ),
+              margin: EdgeInsets.fromLTRB(0, 16, 0, 56),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(areaName,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.notoSans(
+                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      showMaterialModalBottomSheet(
+                          context: context,
+                          builder: (context) => ChestAddPage(areaId));
+                      // // "push"で新規画面に遷移
+                      // // メニュー追加画面から渡される値を受け取る
+                      // final newListText = await Navigator.of(context).push(
+                      //   MaterialPageRoute(builder: (context) {
+                      //     // 遷移先の画面としてメニュー追加画面を指定
+                      //     return ChestAddPage();
+                      //   }),
+                      // );
+                      // if (newListText != null) {
+                      //   // キャンセルした場合は newListText が null となるので注意
+                      //   setState(() {
+                      //     // リスト追加
+                      //     chestList.add(newListText);
+                      //   });
+                      // }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 00),
+                      child: const Icon(Icons.add_circle,
+                      size:40, color: Color(0xFFffad42)),
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -91,49 +123,6 @@ class _ChestPageState extends State<ChestPage> {
               child: makingList(_makingStream,'name', _onTap),
             ),
           ],
-        ),
-      ),
-      floatingActionButton:
-      Container(
-        margin: EdgeInsets.fromLTRB(0, 24, 0, 20),
-        child: SizedBox(
-          width: 360,
-          height: 40,
-          child: ElevatedButton.icon(
-            icon: const Icon(Icons.add),
-            label: Text('メニューを追加',
-                style: GoogleFonts.notoSans(
-                  textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                ),
-            ),
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFF90CAF9),
-              elevation: 0,
-              onPrimary: Color(0xFFffffff),
-            ),
-            onPressed: () async {
-              showMaterialModalBottomSheet(
-                  context: context,
-                  builder: (context) => ChestAddPage(areaId));
-              // // "push"で新規画面に遷移
-              // // メニュー追加画面から渡される値を受け取る
-              // final newListText = await Navigator.of(context).push(
-              //   MaterialPageRoute(builder: (context) {
-              //     // 遷移先の画面としてメニュー追加画面を指定
-              //     return ChestAddPage();
-              //   }),
-              // );
-              // if (newListText != null) {
-              //   // キャンセルした場合は newListText が null となるので注意
-              //   setState(() {
-              //     // リスト追加
-              //     chestList.add(newListText);
-              //   });
-              // }
-            },
-            // child: Icon(
-            //   Icons.add, size: 36),
-          ),
         ),
       ),
     );

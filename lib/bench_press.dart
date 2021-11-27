@@ -76,20 +76,31 @@ class _BenchPressPageState extends State<BenchPressPage> {
       ),
 
       //セット追加ボタン
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFffad42),
-        foregroundColor: const Color(0xFFffffff),
-        // foregroundColor: const Color(0xFFFFCC80),
-        onPressed: () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context)=>SetAdd2()));
-          showMaterialModalBottomSheet(
-            context: context,
-            builder: (context) => BenchAddPage(areaId, menuId),
-          );
-        },
-        child: const Icon(
-          Icons.add,
-          size: 44,
+      floatingActionButton:
+      Container(
+        margin: EdgeInsets.fromLTRB(0, 24, 0, 20),
+        child: SizedBox(
+          width: 360,
+          height: 40,
+          child: ElevatedButton(
+            child: Text('トレーニングをはじめる',
+              style: GoogleFonts.notoSans(
+                textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFFffad42),
+              elevation: 0,
+              onPrimary: Color(0xFFffffff),
+            ),
+            onPressed: () {
+              // Navigator.push(context, MaterialPageRoute(builder: (context)=>SetAdd2()));
+              showMaterialModalBottomSheet(
+                context: context,
+                builder: (context) => BenchAddPage(areaId, menuId),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -333,6 +344,9 @@ class _BenchPressPageState extends State<BenchPressPage> {
     );
   }
 }
+
+
+
 
 //テスト用
 // @override
