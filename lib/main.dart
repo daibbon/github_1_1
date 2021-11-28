@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'TRECA',
       theme: ThemeData.from(
         colorScheme: const ColorScheme.light(
-          primary: Color(0xFF424242),
+          primary: Color(0xFF9e9e9e),
         ),
       ),
       // アプリ起動時にログイン画面を表示

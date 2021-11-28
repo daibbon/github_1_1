@@ -283,6 +283,9 @@ class _BenchAddPageState extends State<BenchAddPage> {
                               controller: item.weightController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                    borderSide: BorderSide(color: Color(0xFF9e9e9e))),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)
@@ -335,8 +338,8 @@ class _BenchAddPageState extends State<BenchAddPage> {
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Colors.blue)),
+                                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                    borderSide: BorderSide(color: Color(0xFF9e9e9e))),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8)
