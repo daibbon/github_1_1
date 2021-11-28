@@ -7,9 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 
 class BenchAddPage extends StatefulWidget {
-  final String areaId, menuId;
+  final String areaId, menuId, menunName;
 
-  BenchAddPage(this.areaId, this.menuId);
+  BenchAddPage(this.areaId, this.menuId, this.menunName);
 
   @override
   _BenchAddPageState createState() => _BenchAddPageState();
@@ -80,12 +80,16 @@ class _BenchAddPageState extends State<BenchAddPage> {
 
                   for (int i = 0; i < items.length; i++) {
                     var e = items[i];
-                    if (e.timesController != '') {
+                    if (e.weightController.text != '' ||
+                        e.timesController.text != '') {
                       post.add({
                         'weight': e.weightController.text,
                         'times': e.timesController.text,
                       });
                     }
+                    // else{
+                    //   continue;
+                    // }
                   }
                   FirebaseFirestore.instance.collection('users')
                       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -126,8 +130,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                 width: double.infinity,
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 32),
                 child: Text(
-                  // menuName,←反映させたいです。。
-                  'メニュー名',
+                  widget.menunName,
                   textAlign: TextAlign.left,
                   style: GoogleFonts.notoSans(
                     textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
@@ -278,9 +281,10 @@ class _BenchAddPageState extends State<BenchAddPage> {
                                 border: OutlineInputBorder(), // 外枠付きデザイン
                               ),
                               inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
+                                FilteringTextInputFormatter
+                                    .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
                                 FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(6),
+                                LengthLimitingTextInputFormatter(8),
                               ],
                             ),
                           ),
@@ -317,9 +321,10 @@ class _BenchAddPageState extends State<BenchAddPage> {
                                 border: OutlineInputBorder(), // 外枠付きデザイン
                               ),
                               inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
+                                FilteringTextInputFormatter
+                                    .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
                                 FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(6),
+                                LengthLimitingTextInputFormatter(8),
                               ],
                             ),
                           ),

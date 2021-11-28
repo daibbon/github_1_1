@@ -26,7 +26,7 @@ class Record {
 class _BenchPressPageState extends State<BenchPressPage> {
   late String areaId, menuName, menuId;
   late Stream<QuerySnapshot> _makingStream;
-
+  late CollectionReference usingCollection;
 
   //superクラスから変数を引き継ぐ処理
   void initState() {
@@ -35,12 +35,14 @@ class _BenchPressPageState extends State<BenchPressPage> {
     menuId = widget.menuId;
     super.initState();
 
-    // データ取得先の指定
-    _makingStream = FirebaseFirestore.instance
-        .collection('users').doc(FirebaseAuth.instance.currentUser!.uid)
+    usingCollection = FirebaseFirestore.instance.collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('areas').doc(areaId)
         .collection('menus').doc(menuId)
-        .collection('posts').orderBy('createdAt', descending: true)
+        .collection('posts');
+
+    // データ取得先の指定
+    _makingStream = usingCollection.orderBy('createdAt', descending: true)
         .snapshots();
   }
 
@@ -70,7 +72,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
               ),
             ),
             //セット一覧
-            Container(child: postList(_makingStream)),
+            Container(child: postList()),
           ],
         ),
       ),
@@ -97,7 +99,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
               // Navigator.push(context, MaterialPageRoute(builder: (context)=>SetAdd2()));
               showMaterialModalBottomSheet(
                 context: context,
-                builder: (context) => BenchAddPage(areaId, menuId),
+                builder: (context) => BenchAddPage(areaId, menuId, menuName),
               );
             },
           ),
@@ -107,7 +109,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
   }
 
 //body本体
-  Widget postList(Stream<QuerySnapshot> _makingStream) {
+  Widget postList() {
     return StreamBuilder<QuerySnapshot>(
         stream: _makingStream,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

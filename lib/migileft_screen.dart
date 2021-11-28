@@ -66,7 +66,7 @@ class _MigileftState extends State<MigileftScreen> {
                 //部位一覧
                 Container(
                     //引数にstream名/フィールド名/画面遷移のメソッドを代入する
-                  child: makingList(_makingStream, 'name', _onTap),
+                  child: makingList2(_makingStream, 'name', _onTap),
                 ),
               ],
             ),
@@ -90,7 +90,11 @@ class _MigileftState extends State<MigileftScreen> {
               onPrimary: Color(0xFFffffff),
             ),
             onPressed: (){
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser!.uid).delete();
               FirebaseAuth.instance.signOut();
+              // FirebaseAuth.instance.currentUser!.delete();
             },
             // child: Icon(
             //   Icons.add, size: 36),
@@ -99,4 +103,60 @@ class _MigileftState extends State<MigileftScreen> {
       ),
     );
   }
+
+  Widget makingList2(Stream<QuerySnapshot> _makingStream, String fieldName, Function function) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _makingStream,
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        // データ読込エラーが発生した場合
+        if (snapshot.hasError) {
+          return Text('エラーが発生しました');
+        }
+        // データ読込中の場合
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("ロード中");
+        }
+        //　データの取得
+        return Container(
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              return InkWell(
+                  onTap: (){
+                    function(document[fieldName],document.id);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    //コンテナ設定
+                    decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFCFCFCF)),)
+                    ),
+
+                    //リストUI
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(20, 10, 20, 36),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("${document[fieldName]}",
+                            style: GoogleFonts.notoSans(
+                              textStyle: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16.0,color: Color(0xFF000000).withOpacity(0.7)),), // subtitle: Text(document.id),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+              );
+            }).toList(),
+          ),
+        );
+
+      },
+    );
+  }
+
 }
