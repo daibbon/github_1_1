@@ -7,14 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 //遷移先
 import 'package:github_1/chest_page.dart';
 import 'package:github_1/method2.dart';
-//サインアウト用に仮挿入
-
-
-
 
 class MigileftScreen extends StatefulWidget {
-  // final String uid ;
-  // MigileftScreen(this.uid);
 
   @override
   _MigileftState createState() => _MigileftState();
@@ -106,3 +100,4 @@ class _MigileftState extends State<MigileftScreen> {
     );
   }
 }
+
