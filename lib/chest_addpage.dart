@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
+import 'package:github_1/chest_page.dart';
+import 'package:github_1/migileft_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ChestAddPage extends StatefulWidget {
@@ -17,14 +19,6 @@ class _ChestAddPageState extends State<ChestAddPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // 入力されたテキストをデータとして持つ
   String _text = '';
-
-  void _onSignIn() {
-    // 入力内容を確認する
-    if (_formKey.currentState?.validate() != true) {
-      // エラーメッセージがあるため処理を中断する
-      return;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +40,8 @@ class _ChestAddPageState extends State<ChestAddPage> {
               margin: EdgeInsets.fromLTRB(0, 15, 24, 0),
               child:
               ElevatedButton(
-                onPressed: () async {
-                  await FirebaseFirestore.instance.collection('users')
-                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                      .collection('areas').doc(widget.areaId)
-                      .collection('menus').add({
-                         'name': _text,
-                         'createdAt': Timestamp.now()
-                      }); // データ
-                  Navigator.of(context).pop();
-                },
+                // ログインボタンをタップしたときの処理
+                onPressed: () => _onSignIn(),
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xFFffad42),
                   elevation: 0,
@@ -108,7 +94,7 @@ class _ChestAddPageState extends State<ChestAddPage> {
                       FilteringTextInputFormatter.singleLineFormatter,
                       LengthLimitingTextInputFormatter(15),
                     ],
-                    onChanged: (String value) {
+                    onChanged: (value) {
                       // データが変更したことを知らせる（画面を更新する）
                       setState(() {
                         // データを変更
@@ -121,11 +107,11 @@ class _ChestAddPageState extends State<ChestAddPage> {
                       // hintText: 'ベンチプレス', // 入力ヒント
                     ),
                     // ニックネームのバリデーション
-                    validator: (String? value) {
+                    validator: (value) {
                       // ニックネームが入力されていない場合
-                      if (value?.isEmpty == true) {
+                      if (value == null || value.isEmpty) {
                         // 問題があるときはメッセージを返す
-                        return 'ニックネームを入力して下さい';
+                        return 'メニューを入力してください';
                       }
                       // 問題ないときはnullを返す
                       return null;
@@ -139,5 +125,27 @@ class _ChestAddPageState extends State<ChestAddPage> {
         ),
       ),
     );
+  }
+
+  void _onSignIn() async {
+    // 入力内容を確認する
+    if (_formKey.currentState?.validate() != true) {
+      // エラーメッセージがあるため処理を中断する
+      return;
+    }
+    await FirebaseFirestore.instance.collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('areas').doc(widget.areaId)
+        .collection('menus').add({
+      'name': _text,
+      'createdAt': Timestamp.now()
+    }); // データ
+    Navigator.of(context).pop();
+    // 画像一覧画面に切り替え
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(
+    //     builder: (_) => ChestPage(areaName, areaId),
+    //   ),
+    // );
   }
 }
