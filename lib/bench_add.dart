@@ -302,7 +302,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                                 FilteringTextInputFormatter
                                     .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
                                 FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(8),
+                                LengthLimitingTextInputFormatter(6),
                               ],
                             ),
                           ),
@@ -354,9 +354,9 @@ class _BenchAddPageState extends State<BenchAddPage> {
                               ),
                               inputFormatters: [
                                 FilteringTextInputFormatter
-                                    .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
+                                    .allow(RegExp(r'[0-9]*')),
                                 FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(8),
+                                LengthLimitingTextInputFormatter(3),
                               ],
                             ),
                           ),
