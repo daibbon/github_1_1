@@ -7,6 +7,7 @@ import 'package:github_1/chest_page.dart';
 import 'package:github_1/migileft_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class ChestAddPage extends StatefulWidget {
   ChestAddPage(this.areaId);
   final String areaId ;
