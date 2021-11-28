@@ -14,17 +14,17 @@ class _WorkoutSetState extends State<WorkoutSet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Row(
         children: [
-          Text('1',
+          const Text('1',
               style: TextStyle(fontSize: 18)),
-          SizedBox(
+          const SizedBox(
             width:150,
             height: 150,
           ),
           Flexible(child: TextField(
-            decoration: InputDecoration(labelText: '0'),
+            decoration: const InputDecoration(labelText: '0'),
             onChanged: (String value) {
               // データが変更したことを知らせる（画面を更新する）
               setState(() {
@@ -33,15 +33,15 @@ class _WorkoutSetState extends State<WorkoutSet> {
               });
             },
           )),
-          Text('kg',
+          const Text('kg',
               style: TextStyle(fontSize: 18)),
-          SizedBox(
+          const SizedBox(
             width:20,
           ),
-          Flexible(child: TextField(
+          const Flexible(child: TextField(
             decoration: InputDecoration(labelText: '0'),
           )),
-          Text('回',
+          const Text('回',
               style: TextStyle(fontSize: 18)),
         ],
       ),

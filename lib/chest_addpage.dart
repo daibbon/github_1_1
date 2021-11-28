@@ -27,29 +27,29 @@ class _ChestAddPageState extends State<ChestAddPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
         //戻るボタン
         leading: InkWell(
             onTap: () {
               Navigator.pop(context);
             },
-            child: Container(child: Icon(Icons.close))),
+            child: Container(child: const Icon(Icons.close))),
         actions: <Widget>[
           //保存ボタン
           Container(
-              margin: EdgeInsets.fromLTRB(0, 15, 24, 0),
+              margin: const EdgeInsets.fromLTRB(0, 15, 24, 0),
               child:
               ElevatedButton(
                 // ログインボタンをタップしたときの処理
                 onPressed: () => _onSignIn(),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFffad42),
+                  primary: const Color(0xFFffad42),
                   elevation: 0,
                 ),
                 child: Text('保存',
                     style: GoogleFonts.notoSans(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16.0),
                     )),
 
@@ -61,19 +61,19 @@ class _ChestAddPageState extends State<ChestAddPage> {
       body: Form(
         key: _formKey,
         child: Container(
-          margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+          margin: const EdgeInsets.fromLTRB(22, 0, 22, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               //メニューを追加
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.fromLTRB(0, 24, 0, 56),
+                margin: const EdgeInsets.fromLTRB(0, 24, 0, 56),
                 child: Text(
                   'メニューを追加',
                   textAlign: TextAlign.left,
                   style: GoogleFonts.notoSans(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 26.0),
                   ),
                 ),
@@ -81,9 +81,9 @@ class _ChestAddPageState extends State<ChestAddPage> {
 
               //ニックネーム入力
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: TextFormField(
                     autofocus: true,
                     style: GoogleFonts.notoSans(

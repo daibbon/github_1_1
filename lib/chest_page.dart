@@ -67,21 +67,21 @@ class _ChestPageState extends State<ChestPage> {
       ),
 
       body: Container(
-        margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+        margin: const EdgeInsets.fromLTRB(22, 0, 22, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             //部位名
             Container(
               width: double.infinity,
-              margin: EdgeInsets.fromLTRB(0, 16, 0, 56),
+              margin: const EdgeInsets.fromLTRB(0, 16, 0, 56),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(areaName,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.notoSans(
-                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
                     ),
                   ),
                   InkWell(
@@ -91,7 +91,7 @@ class _ChestPageState extends State<ChestPage> {
                           builder: (context) => ChestAddPage(areaId));
                     },
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 00),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 00),
                       child: const Icon(Icons.add_circle,
                       size:40, color: Color(0xFFffad42)),
                     ),
@@ -126,15 +126,15 @@ class _ChestPageState extends State<ChestPage> {
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         // データ読込エラーが発生した場合
         if (snapshot.hasError) {
-          return Text('エラーが発生しました');
+          return const Text('エラーが発生しました');
         }
         // データ読込中の場合
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("ロード中");
+          return const Text("ロード中");
         }
         //　データの取得
         return Container(
-          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: ListView(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -145,15 +145,15 @@ class _ChestPageState extends State<ChestPage> {
                     function(document[fieldName],document.id);
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     //コンテナ設定
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFCFCFCF)),)
                     ),
 
                     //リストUI
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 36),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 36),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -161,7 +161,7 @@ class _ChestPageState extends State<ChestPage> {
                           Text("${document[fieldName]}",
                             style: GoogleFonts.notoSans(
                               textStyle: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16.0,color: Color(0xFF000000).withOpacity(0.7)),), // subtitle: Text(document.id),
+                                  fontWeight: FontWeight.bold, fontSize: 16.0,color: const Color(0xFF000000).withOpacity(0.7)),), // subtitle: Text(document.id),
                           ),
 
                           //削除ボタン
@@ -170,16 +170,16 @@ class _ChestPageState extends State<ChestPage> {
                               showModalBottomSheet(
                                 context: context,
                                 // isScrollControlled: true,
-                                shape: RoundedRectangleBorder( // <= 追加
+                                shape: const RoundedRectangleBorder( // <= 追加
                                   borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
                                 ),
                                 builder: (BuildContext context) {
                                   return
                                     //テキスト
                                     Container(
-                                        margin: EdgeInsets.only(top: 30),
+                                        margin: const EdgeInsets.only(top: 30),
                                         // height: 50,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           //モーダル自体の色
                                           color: Colors.white,
                                         ),
@@ -189,13 +189,13 @@ class _ChestPageState extends State<ChestPage> {
                                             Navigator.of(context).pop();
                                             },
                                           child: Container(
-                                            margin: EdgeInsets.fromLTRB(20, 0, 0, 30),
+                                            margin: const EdgeInsets.fromLTRB(20, 0, 0, 30),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 Row(
                                                   children: [
-                                                    Icon(Icons.delete,
+                                                    const Icon(Icons.delete,
                                                         size: 26,
                                                         color: Colors.grey// アイコンの色を設定できる
                                                     ),
@@ -204,7 +204,7 @@ class _ChestPageState extends State<ChestPage> {
                                                       child: Text("削除する",
                                                           style: GoogleFonts.notoSans(
                                                             textStyle: TextStyle(
-                                                                fontWeight: FontWeight.normal, fontSize: 18.0,color: Color(0xFF000000).withOpacity(0.7)),
+                                                                fontWeight: FontWeight.normal, fontSize: 18.0,color: const Color(0xFF000000).withOpacity(0.7)),
                                                           )),
                                                     ),
                                                   ],
@@ -217,7 +217,7 @@ class _ChestPageState extends State<ChestPage> {
                               );
                             },
                             //アイコン
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                               child: Icon(
                                   Icons.more_horiz,

@@ -38,14 +38,14 @@ class _nicknameState extends State<nickname> {
 
       appBar: AppBar(
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
       ),
 
       body: Form(
         key: _formKey,
         child: Container(
-          margin: EdgeInsets.fromLTRB(24, 12, 24, 24),
+          margin: const EdgeInsets.fromLTRB(24, 12, 24, 24),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -54,36 +54,36 @@ class _nicknameState extends State<nickname> {
               //  サインアップ
               Container(
               width: double.infinity,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Text(
                 'サインアップ',
                 textAlign: TextAlign.left,
                 style: GoogleFonts.notoSans(
-                  textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                  textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
                 ),
               ),
             ),
 
               //ニックネーム入力
               Container(
-                margin: EdgeInsets.fromLTRB(0, 36, 0, 20),
+                margin: const EdgeInsets.fromLTRB(0, 36, 0, 20),
                 child: Column(
                   children: [
                     //ニックネーム
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                       width: double.infinity,
                       child: Text(
                         'ニックネーム',
                         textAlign: TextAlign.left,
                         style: GoogleFonts.notoSans(
-                          textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
                         ),
                       ),
                     ),
                     //入力フォーム
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                       child: TextFormField(
                         controller: myController,
                         autofocus: true,
@@ -114,7 +114,7 @@ class _nicknameState extends State<nickname> {
               ),
             //サインアップボタン
             Container(
-              margin: EdgeInsets.fromLTRB(0, 64, 0, 0),
+              margin: const EdgeInsets.fromLTRB(0, 64, 0, 0),
               child: SizedBox(
                 width: 363,
                 height: 40,
@@ -137,18 +137,18 @@ class _nicknameState extends State<nickname> {
 
             //利用規約
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Column(
                 children: [
                   //利用規約説明文
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                     width: double.infinity,
                     child: Text(
                       'サインアップすることで、あなたは以下に同意したことになり\nます。',
                       textAlign: TextAlign.left,
                       style: GoogleFonts.notoSans(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             color: Color(0xFF9e9e9e),
                             fontWeight: FontWeight.bold, fontSize: 12.0),
                       ),
@@ -160,7 +160,7 @@ class _nicknameState extends State<nickname> {
                   InkWell(
                     // onTap: _launchURL,
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 4, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 4, 0, 0),
                       child: Text(
                         '利用規約',
                         style: GoogleFonts.notoSans(

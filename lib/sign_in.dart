@@ -23,19 +23,19 @@ class _SignInScreenState extends State<SignInScreen> {
             children: [
               //Welcome to TRECA
               Container(
-                margin: EdgeInsets.fromLTRB(10, 150, 10, 30),
+                margin: const EdgeInsets.fromLTRB(10, 150, 10, 30),
                 child: Text(
                   'Welcome to TRECA!',
                   style: GoogleFonts.notoSans(
-                    textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 34.0),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 34.0),
                   ),
                 ),
               ),
 
               //画像
               Container(
-                margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                child: Image(
+                margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                child: const Image(
                   width: 411,
                   image: AssetImage('images/training-home-concept_52683-37092.jpg'),
                 ),
@@ -43,7 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
               //ログインボタン
               Container(
-                margin: EdgeInsets.fromLTRB(10, 80, 10, 20),
+                margin: const EdgeInsets.fromLTRB(10, 80, 10, 20),
                 child: SizedBox(
                     width: 317,
                     height: 40,
@@ -53,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       // ログインボタンをタップしたときの処理
                       onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>nickname()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const nickname()));
                       },
                       //ログインボタン詳細
                       child: Text('はじめる',

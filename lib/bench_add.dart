@@ -51,7 +51,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
     });
     // itemのcontrollerをすぐdisposeすると怒られるので
     // 少し時間をおいてからdipose()
-    Future.delayed(Duration(seconds: 1)).then((value) {
+    Future.delayed(const Duration(seconds: 1)).then((value) {
       removedItem.dispose();
     });
   }
@@ -61,7 +61,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -70,11 +70,11 @@ class _BenchAddPageState extends State<BenchAddPage> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Container(child: Icon(Icons.close))),
+            child: Container(child: const Icon(Icons.close))),
         //保存ボタン
         actions: <Widget>[
           Container(
-              margin: EdgeInsets.fromLTRB(0, 15, 24, 0),
+              margin: const EdgeInsets.fromLTRB(0, 15, 24, 0),
               child:
               ElevatedButton(
                 onPressed: () {
@@ -105,13 +105,13 @@ class _BenchAddPageState extends State<BenchAddPage> {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFffad42),
+                  primary: const Color(0xFFffe0b2),
                   elevation: 0,
                 ),
                 child: Text('保存',
                     style: GoogleFonts.notoSans(
-                      textStyle: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16.0),
+                      textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 17.0,color: Color(0xFFf57c00)),
                     )),
 
               )
@@ -125,31 +125,31 @@ class _BenchAddPageState extends State<BenchAddPage> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
-            margin: EdgeInsets.fromLTRB(22, 8, 22, 24),
+            margin: const EdgeInsets.fromLTRB(22, 8, 22, 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 // メニュー名
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 32),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 32),
                   child: Text(
                     widget.menunName,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.notoSans(
-                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
                     ),
                   ),
                 ),
 
                 //日付
                 Container(
-                  margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(4, 0, 0, 0),
                   child: Row(
                     children: [
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                        child: Icon(
+                        margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                        child: const Icon(
                           Icons.calendar_today,
                           color: Colors.black,
                           size: 18,
@@ -158,7 +158,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                       Container(
                         child: Text('$yyyy/$MM/$dd',
                             style: GoogleFonts.notoSans(
-                              textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                              textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
                             ),
                         ),
                       ),
@@ -168,7 +168,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
 
                 //項目
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 32, 0, 0),
                   child: itemNameUI(),
                 ),
 
@@ -185,7 +185,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                   ),
                 //セット追加
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: setAddUI(),
                 ),
                 //セット削除（テスト用）
@@ -206,7 +206,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Container(
-          margin: EdgeInsets.fromLTRB(6, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(6, 0, 0, 0),
           child: Text(
             'セット',
             style: GoogleFonts.notoSans(
@@ -218,9 +218,9 @@ class _BenchAddPageState extends State<BenchAddPage> {
         Row(
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 80, 0),
+              margin: const EdgeInsets.fromLTRB(0, 0, 92, 0),
               child: Text(
-                '重量',
+                'kg',
                 style: GoogleFonts.notoSans(
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14.0),
@@ -228,7 +228,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 34, 0),
+              margin: const EdgeInsets.fromLTRB(0, 0, 34, 0),
               child: Text(
                 '回数',
                 style: GoogleFonts.notoSans(
@@ -245,7 +245,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
 
   Widget textFieldUI(Item item) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: SizedBox(
         width: 360,
         height: 40,
@@ -253,7 +253,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Text(
                 item.id.toString(),
                 style: GoogleFonts.notoSans(
@@ -263,17 +263,17 @@ class _BenchAddPageState extends State<BenchAddPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 24, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 24, 0),
                     child: Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                           child: SizedBox(
-                            width: 60,
+                            width: 90,
                             child: TextField(
                               autofocus: true,
                               style: GoogleFonts.notoSans(
@@ -283,7 +283,17 @@ class _BenchAddPageState extends State<BenchAddPage> {
                               controller: item.weightController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(), // 外枠付きデザイン
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(8)
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFffffff),
+                                        width: 0
+                                    )
+                                ),// 外枠付きデザイン
+                                filled: true,
+                                fillColor: Color(0xFFeceff1),
                               ),
                               inputFormatters: [
                                 FilteringTextInputFormatter
@@ -294,27 +304,28 @@ class _BenchAddPageState extends State<BenchAddPage> {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                          child: Text(
-                            'kg',
-                            style: GoogleFonts.notoSans(
-                              textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16.0),
-                            ),
-                          ),
-                        ),
+                        //kg
+                        // Container(
+                        //   margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                        //   child: Text(
+                        //     'kg',
+                        //     style: GoogleFonts.notoSans(
+                        //       textStyle: const TextStyle(
+                        //           fontWeight: FontWeight.bold, fontSize: 16.0),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                           child: SizedBox(
-                            width: 60,
+                            width: 90,
                             child: TextField(
                               style: GoogleFonts.notoSans(
                                 textStyle: const TextStyle(
@@ -323,7 +334,20 @@ class _BenchAddPageState extends State<BenchAddPage> {
                               controller: item.timesController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(), // 外枠付きデザイン
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.blue)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(8)
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: Color(0xFFffffff),
+                                        width: 0
+                                    )
+                                ),// 外枠付きデザイン
+                                filled: true,
+                                fillColor: Color(0xFFeceff1),
                               ),
                               inputFormatters: [
                                 FilteringTextInputFormatter
@@ -334,16 +358,17 @@ class _BenchAddPageState extends State<BenchAddPage> {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                          child: Text(
-                            '回',
-                            style: GoogleFonts.notoSans(
-                              textStyle: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16.0),
-                            ),
-                          ),
-                        ),
+                        //回
+                        // Container(
+                        //   margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                        //   child: Text(
+                        //     '回',
+                        //     style: GoogleFonts.notoSans(
+                        //       textStyle: TextStyle(
+                        //           fontWeight: FontWeight.bold, fontSize: 16.0),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -359,7 +384,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
   Widget setAddUI() {
     return SizedBox(
       width: 360,
-      height: 36,
+      height: 32,
       child: ElevatedButton.icon(
         onPressed: () {
           add();
@@ -367,13 +392,13 @@ class _BenchAddPageState extends State<BenchAddPage> {
         icon: const Icon(Icons.add),
         label: Text('メニューを追加',
           style: GoogleFonts.notoSans(
-            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+            textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
           ),
         ),
         style: ElevatedButton.styleFrom(
-          primary: Color(0xFF90CAF9),
+          primary: const Color(0xFFbbdefb),
           elevation: 0,
-          onPrimary: Color(0xFFffffff),
+          onPrimary: const Color(0xFF42a5f5),
         ),
       ),
     );
