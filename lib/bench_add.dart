@@ -89,19 +89,17 @@ class _BenchAddPageState extends State<BenchAddPage> {
                         'times': e.timesController.text,
                       });
                     }
-                    // else{
-                    //   continue;
-                    // }
                   }
-                  FirebaseFirestore.instance.collection('users')
-                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                      .collection('areas').doc(widget.areaId)
-                      .collection('menus').doc(widget.menuId)
-                      .collection('posts').add({
-                    // 'set': FieldValue.arrayUnion([post]),
-                    'set': post,
-                    'createdAt' : Timestamp.fromDate(DateTime.now()),
-                  });
+                  if (post.isNotEmpty) {
+                    FirebaseFirestore.instance.collection('users')
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .collection('areas').doc(widget.areaId)
+                        .collection('menus').doc(widget.menuId)
+                        .collection('posts').add({
+                      'set': post,
+                      'createdAt' : Timestamp.fromDate(DateTime.now()),
+                    });
+                  }
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
