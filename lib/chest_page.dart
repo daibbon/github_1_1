@@ -58,6 +58,7 @@ class _ChestPageState extends State<ChestPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         iconTheme:const IconThemeData(color: Colors.black),

@@ -49,31 +49,35 @@ class _BenchPressPageState extends State<BenchPressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         iconTheme:const IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
       ),
 
-      body: Container(
-        margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            //メニュー名
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 56),
-              child: Text(menuName,
-                textAlign: TextAlign.left,
-                style: GoogleFonts.notoSans(
-                  textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Container(
+          margin: EdgeInsets.fromLTRB(22, 0, 22, 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //メニュー名
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 56),
+                child: Text(menuName,
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.notoSans(
+                    textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                  ),
                 ),
               ),
-            ),
-            //セット一覧
-            Container(child: postList()),
-          ],
+              //セット一覧
+              Container(child: postList()),
+            ],
+          ),
         ),
       ),
 
@@ -217,25 +221,54 @@ class _BenchPressPageState extends State<BenchPressPage> {
                     context: context,
                     // isScrollControlled: true,
                     shape: RoundedRectangleBorder( // <= 追加
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
                     ),
-                    //削除POP
-                    builder: (context) => DraggableScrollableSheet(
-                      builder: (context, scrollController) =>
-                      //テキスト
-                      Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          decoration: BoxDecoration(
-                            //モーダル自体の色
-                            color: Colors.white,
-                          ),
-                          child: Text("削除する")),
-                    ),
+                    builder: (BuildContext context) {
+                      return
+                        //テキスト
+                        Container(
+                            margin: EdgeInsets.only(top: 30),
+                            // height: 50,
+                            decoration: BoxDecoration(
+                              //モーダル自体の色
+                              color: Colors.white,
+                            ),
+                            child: InkWell(
+                              onTap: (){
+                                //削除機能お願いします。
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(20, 0, 0, 30),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.delete,
+                                            size: 26,
+                                            color: Colors.grey// アイコンの色を設定できる
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
+                                          child: Text("削除する",
+                                              style: GoogleFonts.notoSans(
+                                                textStyle: TextStyle(
+                                                    fontWeight: FontWeight.normal, fontSize: 18.0,color: Color(0xFF000000).withOpacity(0.7)),
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ));
+                    },
                   );
                 },
                 //アイコン
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Icon(
                       Icons.more_horiz,
                       color: Colors.black// アイコンの色を設定できる

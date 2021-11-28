@@ -58,6 +58,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
@@ -118,78 +119,81 @@ class _BenchAddPageState extends State<BenchAddPage> {
     ),
 
 
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Container(
-          margin: EdgeInsets.fromLTRB(22, 8, 22, 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              // メニュー名
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 32),
-                child: Text(
-                  widget.menunName,
-                  textAlign: TextAlign.left,
-                  style: GoogleFonts.notoSans(
-                    textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+      body: SingleChildScrollView(
+        reverse: true,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Container(
+            margin: EdgeInsets.fromLTRB(22, 8, 22, 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                // メニュー名
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 32),
+                  child: Text(
+                    widget.menunName,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.notoSans(
+                      textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                    ),
                   ),
                 ),
-              ),
 
-              //日付
-              Container(
-                margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.calendar_today,
-                        color: Colors.black,
-                        size: 18,
+                //日付
+                Container(
+                  margin: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                        child: Icon(
+                          Icons.calendar_today,
+                          color: Colors.black,
+                          size: 18,
+                        ),
                       ),
-                    ),
-                    Container(
-                      child: Text('$yyyy/$MM/$dd',
-                          style: GoogleFonts.notoSans(
-                            textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                          ),
+                      Container(
+                        child: Text('$yyyy/$MM/$dd',
+                            style: GoogleFonts.notoSans(
+                              textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                            ),
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+
+                //項目
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 32, 0, 0),
+                  child: itemNameUI(),
+                ),
+
+                //入力リスト
+                Form(
+                    key: _formKey,
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        ...items.map((item) => textFieldUI(item)),
+                      ],
                     ),
-                  ],
+                  ),
+                //セット追加
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: setAddUI(),
                 ),
-              ),
-
-              //項目
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 32, 0, 0),
-                child: itemNameUI(),
-              ),
-
-              //入力リスト
-              Form(
-                key: _formKey,
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    ...items.map((item) => textFieldUI(item)),
-                  ],
-                ),
-              ),
-              //セット追加
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: setAddUI(),
-              ),
-              //セット削除（テスト用）
-              // Container(
-              //   margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              //   child: setDeleteUI(),
-              // ),
-            ],
+                //セット削除（テスト用）
+                // Container(
+                //   margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                //   child: setDeleteUI(),
+                // ),
+              ],
+            ),
           ),
         ),
       ),
