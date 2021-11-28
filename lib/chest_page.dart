@@ -93,7 +93,7 @@ class _ChestPageState extends State<ChestPage> {
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 0, 00),
                       child: const Icon(Icons.add_circle,
-                      size:40, color: Color(0xFFffad42)),
+                      size:44, color: Color(0xFFffad42)),
                     ),
                   ),
                 ],

@@ -44,13 +44,13 @@ class _ChestAddPageState extends State<ChestAddPage> {
                 // ログインボタンをタップしたときの処理
                 onPressed: () => _onSignIn(),
                 style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFFffad42),
+                  primary: const Color(0xFFffe0b2),
                   elevation: 0,
                 ),
                 child: Text('保存',
                     style: GoogleFonts.notoSans(
                       textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16.0),
+                          fontWeight: FontWeight.bold, fontSize: 16.0, color: Color(0xFFf57c00)),
                     )),
 
               )

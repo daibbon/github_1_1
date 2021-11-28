@@ -50,7 +50,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         iconTheme:const IconThemeData(color: Colors.black),
