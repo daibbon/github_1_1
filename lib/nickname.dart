@@ -188,11 +188,12 @@ class _nicknameState extends State<nickname> {
       // エラーメッセージがあるため処理を中断する
       return;
     }
-    //DB登録処理
+    //ユーザー登録処理
     signInWithAnonymously();
-    //ローディング画面表示と
+    //ローディング画面表示
     showProgressDialog();
     await Future.delayed(const Duration(seconds: 2));
+    //DB登録処理
     String uid = auth.currentUser!.uid.toString();
     addUser(uid);
     Navigator.of(context).pop();

@@ -93,6 +93,7 @@ class _MigileftState extends State<MigileftScreen> {
               FirebaseFirestore.instance
                   .collection('users')
                   .doc(FirebaseAuth.instance.currentUser!.uid).delete();
+              Future.delayed(const Duration(seconds: 1));
               FirebaseAuth.instance.signOut();
               // FirebaseAuth.instance.currentUser!.delete();
             },
