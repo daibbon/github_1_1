@@ -149,7 +149,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                 return InkWell(
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 0, 12),
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 12, 6),
                     decoration: BoxDecoration(
                       border: Border.all(color: const Color(0xFFbdbdbd)),
                       borderRadius: BorderRadius.circular(12),
@@ -287,35 +287,30 @@ class _BenchPressPageState extends State<BenchPressPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
               // セット
+                  Container(
+                    width: 100,
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Text('セット',
+                        style: GoogleFonts.notoSans(
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                        )),
+                  ),
               Container(
+                width: 30,
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Text('セット',
-                  style: GoogleFonts.notoSans(
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                  )),
+                child: Text('重量',
+                    style: GoogleFonts.notoSans(
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                    )),
               ),
+              //回数
               Container(
+                width: 40,
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Row(
-                  children: [
-                    //重量
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(24, 0, 16, 0),
-                      child: Text('重量',
-                          style: GoogleFonts.notoSans(
-                            textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-                          )),
-                    ),
-                    //回数
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(24, 0, 28, 0),
-                      child: Text('回数',
-                          style: GoogleFonts.notoSans(
-                            textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0,),
-                          )),
-                    ),
-                  ],
-                ),
+                child: Text('回数',
+                    style: GoogleFonts.notoSans(
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0,),
+                    )),
               ),
             ]),
           ),
@@ -326,55 +321,76 @@ class _BenchPressPageState extends State<BenchPressPage> {
 //実際のセットのUI
   Widget setListUI(Record record) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+      margin: const EdgeInsets.fromLTRB(0, 4, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           //セット
           Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            width: 100,
+            margin: const EdgeInsets.fromLTRB(24, 0, 0, 0),
             child: Text(record.set,
                 style: GoogleFonts.notoSans(
                   textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0,),
                 )),
           ),
 
-          Row(
-            children: [
-              //重量
-              Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                child: Text(record.weight,
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
-                    )),
-              ),
-              //kg
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 4, 16, 0),
-                child: Text('kg',
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0,color: Color(0xFFbdbdbd)),
-                    )),
-              ),
-              //回数
-              Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                child: Text(record.times,
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
-                    )),
-              ),
-              //回
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 4, 12, 0),
-                child: Text('回',
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0,
-                          color: Color(0xFFbdbdbd)),
-                    )),
-              ),
-            ],
+          Container(
+            child: Row(
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 50
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Text(record.weight,
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.notoSans(
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                        )),
+                  ),
+                ),
+                //kg
+                Container(
+                  margin: const EdgeInsets.fromLTRB(4, 2, 0, 0),
+                  child: Text('kg',
+                      style: GoogleFonts.notoSans(
+                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0,color: Color(0xFFbdbdbd)),
+                      )),
+                ),
+              ],
+            ),
+          ),
+
+          //回数
+          Container(
+            child: Row(
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 50
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Text(record.times,
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.notoSans(
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                        )),
+                  ),
+                ),
+                //回
+                Container(
+                  margin: const EdgeInsets.fromLTRB(4, 4, 0, 0),
+                  child: Text('回',
+                      style: GoogleFonts.notoSans(
+                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0,
+                            color: Color(0xFFbdbdbd)),
+                      )),
+                ),
+              ],
+            ),
           ),
         ],
       ),
