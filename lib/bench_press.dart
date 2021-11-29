@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 
+
 // リスト一覧画面用Widget
 class BenchPressPage extends StatefulWidget {
   final String areaId, menuName, menuId;
