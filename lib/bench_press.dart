@@ -223,7 +223,6 @@ class _BenchPressPageState extends State<BenchPressPage> {
                   ),
                 ],
               ),
-
               //削除ボタン
               InkWell(
                 onTap: () {
@@ -296,7 +295,6 @@ class _BenchPressPageState extends State<BenchPressPage> {
               ),
             ],
           ),
-
           //セット/重量/回数
           Container(
             margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),

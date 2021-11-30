@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //遷移先
 import 'package:github_1/chest_page.dart';
-import 'package:github_1/method2.dart';
+// import 'package:github_1/method2.dart';
 
 class MigileftScreen extends StatefulWidget {
 
@@ -124,7 +124,7 @@ class _MigileftState extends State<MigileftScreen> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              // Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
               return InkWell(
                   onTap: (){
                     function(document[fieldName],document.id);

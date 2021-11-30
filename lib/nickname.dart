@@ -153,9 +153,7 @@ class _nicknameState extends State<nickname> {
                             fontWeight: FontWeight.bold, fontSize: 12.0),
                       ),
                     ),
-
                   ),
-
                   //→利用規約
                   InkWell(
                     // onTap: _launchURL,
