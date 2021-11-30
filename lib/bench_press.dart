@@ -159,7 +159,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-                          child: headUI(createdAt),
+                          child: headUI(createdAt, document.id),
                         ),
                         Container(
                           margin: const EdgeInsets.all(2),
@@ -182,7 +182,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
   }
 
 // 日付,セット,重量,回数のUI
-  Widget headUI(DateTime createdAt) {
+  Widget headUI(DateTime createdAt, postId) {
     String yyyy = createdAt.year.toString();
     String MM = createdAt.month.toString().padLeft(2);
     String dd = createdAt.day.toString().padLeft(2);
@@ -237,7 +237,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                             ),
                             child: InkWell(
                               onTap: (){
-                                //削除機能お願いします。
+                                usingCollection.doc(postId).delete();
                                 Navigator.of(context).pop();
                               },
                               child: Container(

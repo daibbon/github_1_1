@@ -89,19 +89,17 @@ class _BenchAddPageState extends State<BenchAddPage> {
                         'times': e.timesController.text,
                       });
                     }
-                    // else{
-                    //   continue;
-                    // }
                   }
-                  FirebaseFirestore.instance.collection('users')
-                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                      .collection('areas').doc(widget.areaId)
-                      .collection('menus').doc(widget.menuId)
-                      .collection('posts').add({
-                    // 'set': FieldValue.arrayUnion([post]),
-                    'set': post,
-                    'createdAt' : Timestamp.fromDate(DateTime.now()),
-                  });
+                  if (post.isNotEmpty) {
+                    FirebaseFirestore.instance.collection('users')
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .collection('areas').doc(widget.areaId)
+                        .collection('menus').doc(widget.menuId)
+                        .collection('posts').add({
+                      'set': post,
+                      'createdAt' : Timestamp.fromDate(DateTime.now()),
+                    });
+                  }
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
@@ -298,7 +296,7 @@ class _BenchAddPageState extends State<BenchAddPage> {
                     FilteringTextInputFormatter
                         .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
                     FilteringTextInputFormatter.singleLineFormatter,
-                    LengthLimitingTextInputFormatter(8),
+                    LengthLimitingTextInputFormatter(6),
                   ],
                 ),
               ),
@@ -334,9 +332,9 @@ class _BenchAddPageState extends State<BenchAddPage> {
                   ),
                   inputFormatters: [
                     FilteringTextInputFormatter
-                        .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
+                        .allow(RegExp(r'[0-9]*')),
                     FilteringTextInputFormatter.singleLineFormatter,
-                    LengthLimitingTextInputFormatter(8),
+                    LengthLimitingTextInputFormatter(3),
                   ],
                 ),
               ),
