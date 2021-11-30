@@ -6,10 +6,11 @@ import 'package:github_1/bench_add.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+
+
 // リスト一覧画面用Widget
 class BenchPressPage extends StatefulWidget {
   final String areaId, menuName, menuId;
-
   BenchPressPage(this.areaId, this.menuName, this.menuId);
 
   @override
@@ -20,9 +21,7 @@ class Record {
   final String set, weight, times;
 
   Record({
-    required this.set,
-    required this.weight,
-    required this.times,
+    required this.set, required this.weight, required this.times,
   });
 }
 
@@ -38,18 +37,15 @@ class _BenchPressPageState extends State<BenchPressPage> {
     menuId = widget.menuId;
     super.initState();
 
-    usingCollection = FirebaseFirestore.instance
-        .collection('users')
+    usingCollection = FirebaseFirestore.instance.collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('areas')
-        .doc(areaId)
-        .collection('menus')
-        .doc(menuId)
+        .collection('areas').doc(areaId)
+        .collection('menus').doc(menuId)
         .collection('posts');
 
     // データ取得先の指定
-    _makingStream =
-        usingCollection.orderBy('createdAt', descending: true).snapshots();
+    _makingStream = usingCollection.orderBy('createdAt', descending: true)
+        .snapshots();
   }
 
   @override
@@ -58,7 +54,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme:const IconThemeData(color: Colors.black),
         backgroundColor: CupertinoColors.white,
       ),
 
@@ -73,12 +69,10 @@ class _BenchPressPageState extends State<BenchPressPage> {
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.fromLTRB(0, 0, 0, 56),
-                child: Text(
-                  menuName,
+                child: Text(menuName,
                   textAlign: TextAlign.left,
                   style: GoogleFonts.notoSans(
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 24.0),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
                   ),
                 ),
               ),
@@ -90,17 +84,16 @@ class _BenchPressPageState extends State<BenchPressPage> {
       ),
 
       //セット追加ボタン
-      floatingActionButton: Container(
+      floatingActionButton:
+      Container(
         margin: const EdgeInsets.fromLTRB(0, 24, 0, 20),
         child: SizedBox(
           width: 360,
           height: 40,
           child: ElevatedButton(
-            child: Text(
-              'トレーニングをはじめる',
+            child: Text('トレーニングをはじめる',
               style: GoogleFonts.notoSans(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 15.0),
+                textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
               ),
             ),
             style: ElevatedButton.styleFrom(
@@ -157,7 +150,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                 return InkWell(
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 0, 12),
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 12, 6),
                     decoration: BoxDecoration(
                       border: Border.all(color: const Color(0xFFbdbdbd)),
                       borderRadius: BorderRadius.circular(12),
@@ -166,7 +159,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-                          child: headUI(createdAt, document.id),
+                          child: headUI(createdAt),
                         ),
                         Container(
                           margin: const EdgeInsets.all(2),
@@ -189,7 +182,7 @@ class _BenchPressPageState extends State<BenchPressPage> {
   }
 
 // 日付,セット,重量,回数のUI
-  Widget headUI(DateTime createdAt, String postId) {
+  Widget headUI(DateTime createdAt) {
     String yyyy = createdAt.year.toString();
     String MM = createdAt.month.toString().padLeft(2);
     String dd = createdAt.day.toString().padLeft(2);
@@ -209,17 +202,17 @@ class _BenchPressPageState extends State<BenchPressPage> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                     child: const Icon(
-                      Icons.calendar_today,
-                      color: Colors.black,
+                        Icons.calendar_today,
+                        color: Colors.black,
                       size: 18,
                     ),
                   ),
                   Container(
                     child: Text('$yyyy/$MM/$dd   $HH:$mm',
                         style: GoogleFonts.notoSans(
-                          textStyle: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14.0),
-                        )),
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                        )
+                    ),
                   ),
                 ],
               ),
@@ -229,68 +222,59 @@ class _BenchPressPageState extends State<BenchPressPage> {
                   showModalBottomSheet(
                     context: context,
                     // isScrollControlled: true,
-                    shape: const RoundedRectangleBorder(
-                      // <= 追加
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(8)),
+                    shape: const RoundedRectangleBorder( // <= 追加
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
                     ),
                     builder: (BuildContext context) {
                       return
-                          //テキスト
-                          Container(
-                              margin: const EdgeInsets.only(top: 30),
-                              // height: 50,
-                              decoration: const BoxDecoration(
-                                //モーダル自体の色
-                                color: Colors.white,
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  usingCollection.doc(postId).delete();
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(20, 0, 0, 30),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.delete,
-                                              size: 26,
-                                              color: Colors.grey // アイコンの色を設定できる
-                                              ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                12, 0, 0, 0),
-                                            child: Text("削除する",
-                                                style: GoogleFonts.notoSans(
-                                                  textStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      fontSize: 18.0,
-                                                      color: const Color(
-                                                              0xFF000000)
-                                                          .withOpacity(0.7)),
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                        //テキスト
+                        Container(
+                            margin: const EdgeInsets.only(top: 30),
+                            // height: 50,
+                            decoration: const BoxDecoration(
+                              //モーダル自体の色
+                              color: Colors.white,
+                            ),
+                            child: InkWell(
+                              onTap: (){
+                                //削除機能お願いします。
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.fromLTRB(20, 0, 0, 30),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.delete,
+                                            size: 26,
+                                            color: Colors.grey// アイコンの色を設定できる
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
+                                          child: Text("削除する",
+                                              style: GoogleFonts.notoSans(
+                                                textStyle: TextStyle(
+                                                    fontWeight: FontWeight.normal, fontSize: 18.0,color: const Color(0xFF000000).withOpacity(0.7)),
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                          );
+                            ));
                     },
                   );
                 },
                 //アイコン
                 child: const Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child:
-                      Icon(Icons.more_horiz, color: Colors.black // アイコンの色を設定できる
-                          ),
+                  child: Icon(
+                      Icons.more_horiz,
+                      color: Colors.black// アイコンの色を設定できる
+                  ),
                 ),
               ),
             ],
@@ -301,119 +285,120 @@ class _BenchPressPageState extends State<BenchPressPage> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  // セット
+              // セット
                   Container(
+                    width: 100,
                     margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Text('セット',
                         style: GoogleFonts.notoSans(
-                          textStyle: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14.0),
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
                         )),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Row(
-                      children: [
-                        //重量
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(24, 0, 16, 0),
-                          child: Text('重量',
-                              style: GoogleFonts.notoSans(
-                                textStyle: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.0),
-                              )),
-                        ),
-                        //回数
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(24, 0, 28, 0),
-                          child: Text('回数',
-                              style: GoogleFonts.notoSans(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                ]
-            ),
+              Container(
+                width: 30,
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Text('重量',
+                    style: GoogleFonts.notoSans(
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+                    )),
+              ),
+              //回数
+              Container(
+                width: 40,
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Text('回数',
+                    style: GoogleFonts.notoSans(
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0,),
+                    )),
+              ),
+            ]),
           ),
-        ],
-      ),
+        ],),
     );
   }
 
 //実際のセットのUI
   Widget setListUI(Record record) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+      margin: const EdgeInsets.fromLTRB(0, 4, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           //セット
           Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            width: 100,
+            margin: const EdgeInsets.fromLTRB(24, 0, 0, 0),
             child: Text(record.set,
                 style: GoogleFonts.notoSans(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
+                  textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0,),
                 )),
           ),
 
-          Row(
-            children: [
-              //重量
-              Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                child: Text(record.weight.padLeft(6),
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 22.0),
-                    )),
-              ),
-              //kg
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 4, 16, 0),
-                child: Text('kg',
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.0,
-                          color: Color(0xFFbdbdbd)),
-                    )),
-              ),
-              //回数
-              Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 8, 0),
-                child: Text(record.times.padLeft(3),
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 22.0),
-                    )),
-              ),
-              //回
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 4, 12, 0),
-                child: Text('回',
-                    style: GoogleFonts.notoSans(
-                      textStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.0,
-                          color: Color(0xFFbdbdbd)),
-                    )),
-              ),
-            ],
+          Container(
+            child: Row(
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 50
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Text(record.weight,
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.notoSans(
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                        )),
+                  ),
+                ),
+                //kg
+                Container(
+                  margin: const EdgeInsets.fromLTRB(4, 2, 0, 0),
+                  child: Text('kg',
+                      style: GoogleFonts.notoSans(
+                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0,color: Color(0xFFbdbdbd)),
+                      )),
+                ),
+              ],
+            ),
+          ),
+
+          //回数
+          Container(
+            child: Row(
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 50
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Text(record.times,
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.notoSans(
+                          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                        )),
+                  ),
+                ),
+                //回
+                Container(
+                  margin: const EdgeInsets.fromLTRB(4, 4, 0, 0),
+                  child: Text('回',
+                      style: GoogleFonts.notoSans(
+                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0,
+                            color: Color(0xFFbdbdbd)),
+                      )),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 }
+
+
+
 
 //テスト用
 // @override
@@ -482,3 +467,4 @@ class _BenchPressPageState extends State<BenchPressPage> {
 //         )
 //     );
 //   }
+

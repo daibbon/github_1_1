@@ -89,17 +89,19 @@ class _BenchAddPageState extends State<BenchAddPage> {
                         'times': e.timesController.text,
                       });
                     }
+                    // else{
+                    //   continue;
+                    // }
                   }
-                  if (post.isNotEmpty) {
-                    FirebaseFirestore.instance.collection('users')
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .collection('areas').doc(widget.areaId)
-                        .collection('menus').doc(widget.menuId)
-                        .collection('posts').add({
-                      'set': post,
-                      'createdAt' : Timestamp.fromDate(DateTime.now()),
-                    });
-                  }
+                  FirebaseFirestore.instance.collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('areas').doc(widget.areaId)
+                      .collection('menus').doc(widget.menuId)
+                      .collection('posts').add({
+                    // 'set': FieldValue.arrayUnion([post]),
+                    'set': post,
+                    'createdAt' : Timestamp.fromDate(DateTime.now()),
+                  });
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
@@ -203,7 +205,8 @@ class _BenchAddPageState extends State<BenchAddPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Container(
-          margin: const EdgeInsets.fromLTRB(6, 0, 0, 0),
+          width: 100,
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: Text(
             'セット',
             style: GoogleFonts.notoSans(
@@ -212,33 +215,33 @@ class _BenchAddPageState extends State<BenchAddPage> {
             ),
           ),
         ),
-        Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 92, 0),
-              child: Text(
-                'kg',
-                style: GoogleFonts.notoSans(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14.0),
-                ),
-              ),
+        Container(
+          width: 40,
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Text(
+            'kg',
+            style: GoogleFonts.notoSans(
+              textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 14.0),
             ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 34, 0),
-              child: Text(
-                '回数',
-                style: GoogleFonts.notoSans(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14.0),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
+        Container(
+          width: 60,
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Text(
+            '回数',
+            style: GoogleFonts.notoSans(
+              textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: 14.0),
+            ),
+          ),
+        ),
+
       ],
     );
   }
+
 
   Widget textFieldUI(Item item) {
     return Container(
@@ -249,8 +252,10 @@ class _BenchAddPageState extends State<BenchAddPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //セット
             Container(
-              margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              width: 100,
+              margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
               child: Text(
                 item.id.toString(),
                 style: GoogleFonts.notoSans(
@@ -259,120 +264,81 @@ class _BenchAddPageState extends State<BenchAddPage> {
                 ),
               ),
             ),
+            //kgの入力
             Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 24, 0),
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                          child: SizedBox(
-                            width: 90,
-                            child: TextField(
-                              autofocus: true,
-                              style: GoogleFonts.notoSans(
-                                textStyle: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 22.0,),
-                              ),
-                              controller: item.weightController,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(color: Color(0xFF9e9e9e))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(8)
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: Color(0xFFffffff),
-                                        width: 0
-                                    )
-                                ),// 外枠付きデザイン
-                                filled: true,
-                                fillColor: Color(0xFFeceff1),
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter
-                                    .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
-                                FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(6),
-                              ],
-                            ),
-                          ),
-                        ),
-                        //kg
-                        // Container(
-                        //   margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                        //   child: Text(
-                        //     'kg',
-                        //     style: GoogleFonts.notoSans(
-                        //       textStyle: const TextStyle(
-                        //           fontWeight: FontWeight.bold, fontSize: 16.0),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
+              child: SizedBox(
+                width: 100,
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  autofocus: true,
+                  style: GoogleFonts.notoSans(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 21.0,),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                          child: SizedBox(
-                            width: 90,
-                            child: TextField(
-                              style: GoogleFonts.notoSans(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 22.0,),
-                              ),
-                              controller: item.timesController,
-                              keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(color: Color(0xFF9e9e9e))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(8)
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: Color(0xFFffffff),
-                                        width: 0
-                                    )
-                                ),// 外枠付きデザイン
-                                filled: true,
-                                fillColor: Color(0xFFeceff1),
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter
-                                    .allow(RegExp(r'[0-9]*')),
-                                FilteringTextInputFormatter.singleLineFormatter,
-                                LengthLimitingTextInputFormatter(3),
-                              ],
-                            ),
-                          ),
+                  controller: item.weightController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        borderSide: BorderSide(color: Color(0xFF9e9e9e))),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(8)
                         ),
-                        //回
-                        // Container(
-                        //   margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                        //   child: Text(
-                        //     '回',
-                        //     style: GoogleFonts.notoSans(
-                        //       textStyle: TextStyle(
-                        //           fontWeight: FontWeight.bold, fontSize: 16.0),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
+                        borderSide: BorderSide(
+                            color: Color(0xFFffffff),
+                            width: 0
+                        )
+                    ),// 外枠付きデザイン
+                    filled: true,
+                    fillColor: Color(0xFFeceff1),
                   ),
-                ],
+                  inputFormatters: [
+                    FilteringTextInputFormatter
+                        .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
+                    FilteringTextInputFormatter.singleLineFormatter,
+                    LengthLimitingTextInputFormatter(8),
+                  ],
+                ),
+              ),
+            ),
+            //回数の入力
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: SizedBox(
+                width: 100,
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.notoSans(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 21.0,),
+                  ),
+                  controller: item.timesController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        borderSide: BorderSide(color: Color(0xFF9e9e9e))),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(8)
+                        ),
+                        borderSide: BorderSide(
+                            color: Color(0xFFffffff),
+                            width: 0
+                        )
+                    ),// 外枠付きデザイン
+                    filled: true,
+                    fillColor: Color(0xFFeceff1),
+                  ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter
+                        .allow(RegExp(r'[0-9]+(\.)?[0-9]*')),
+                    FilteringTextInputFormatter.singleLineFormatter,
+                    LengthLimitingTextInputFormatter(8),
+                  ],
+                ),
               ),
             ),
           ],
